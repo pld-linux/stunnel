@@ -155,9 +155,9 @@ fi
 
 %post inetd
 if [ -f /var/lock/subsys/rc-inetd ]; then
-        /etc/rc.d/init.d/rc-inetd restart 1>&2
+	/etc/rc.d/init.d/rc-inetd restart 1>&2
 else
-        echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inet server" 1>&2
+	echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inet server" 1>&2
 fi
 
 %postun inetd
@@ -169,7 +169,7 @@ fi
 %defattr(644,root,root,755)
 # note: this COPYING contains general information not GPL text
 %doc AUTHORS BUGS COPYING CREDITS ChangeLog NEWS PORTS README TODO doc/en/* doc/stunnel.html 
-%doc src/stunnel.exe  tools/{ca.*,importCA.*} tools/stunnel.pem
+%doc src/stunnel.exe tools/{ca.*,importCA.*} tools/stunnel.pem
 %doc %lang(fr) doc/stunnel.fr.html
 %doc %lang(pl) doc/pl/* doc/stunnel.pl.html
 %attr(750,stunnel,stunnel) %{_var}/run/stunnel
