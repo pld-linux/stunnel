@@ -1,0 +1,30 @@
+--- stunnel-3.22/configure.ac~	Mon Jan  7 14:08:57 2002
++++ stunnel-3.22/configure.ac	Mon Jan  7 14:08:57 2002
+@@ -13,6 +13,13 @@
+ AC_SUBST(VERSION)
+ AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
+ 
++dnl Checks for integer sizes
++AC_CHECK_SIZEOF(unsigned char)
++AC_CHECK_SIZEOF(unsigned short)
++AC_CHECK_SIZEOF(unsigned int)
++AC_CHECK_SIZEOF(unsigned long)
++AC_CHECK_SIZEOF(unsigned long long)
++
+ checkssldir() { :
+     if test -f "$1/include/openssl/ssl.h"; then
+         AC_DEFINE(HAVE_OPENSSL)
+@@ -224,13 +231,6 @@
+ dnl Checks for library functions.
+ AC_CHECK_FUNCS(getopt snprintf vsnprintf openpty _getpty daemon waitpid wait4 sysconf getrlimit pthread_sigmask)
+ 
+-dnl Checks for integer sizes
+-AC_CHECK_SIZEOF(unsigned char)
+-AC_CHECK_SIZEOF(unsigned short)
+-AC_CHECK_SIZEOF(unsigned int)
+-AC_CHECK_SIZEOF(unsigned long)
+-AC_CHECK_SIZEOF(unsigned long long)
+-
+ LIBS="$LIBS $wrap_LIB"
+ 
+ AC_CONFIG_FILES([Makefile])
