@@ -1,0 +1,13 @@
+--- stunnel-4.05/src/client.c.orig	2004-05-08 00:54:12.000000000 +0200
++++ stunnel-4.05/src/client.c	2004-05-08 00:53:11.000000000 +0200
+@@ -651,8 +651,8 @@
+     leave_critical_section(CRIT_NTOA);
+ 
+     if (!result) {
+-        log(LOG_WARNING, "Connection from %s:%d REFUSED by libwrap",
+-            c->accepting_address, ntohs(c->addr.sin_port));
++        log(LOG_WARNING, "Connection to service %s from %s:%d REFUSED by libwrap",
++            c->opt->servname, c->accepting_address, ntohs(c->addr.sin_port));
+         log(LOG_DEBUG, "See hosts_access(5) for details");
+         return -1; /* FAILED */
+     }
