@@ -1,8 +1,8 @@
 --- stunnel-4.04/src/Makefile.am.orig	Sun Jan 12 19:16:35 2003
 +++ stunnel-4.04/src/Makefile.am	Sun Jan 12 19:17:30 2003
-@@ -18,26 +18,8 @@
- libstunnel_la_SOURCES = $(shared_sources)
- libstunnel_la_LDFLAGS = -avoid-version
+@@ -21,26 +21,8 @@
+ # Red Hat "by design" bug #82369
+ INCLUDES = -I/usr/kerberos/include
  
 -# Win32 executable
 -
@@ -10,7 +10,7 @@
 -EXTRA_PROGRAMS = stunnel.exe
 -stunnel_exe_SOURCES =  $(common_headers) $(common_sources) $(win32_sources)
 -
--OPENSSLDIR=/usr/src/openssl-0.9.7
+-OPENSSLDIR=/usr/src/openssl-0.9.7c
 -WINCFLAGS=-O2 -Wall -I$(OPENSSLDIR)/outinc \
 -	-DUSE_WIN32=1 -DHAVE_OPENSSL=1 -DVERSION=\"@VERSION@\"
 -WINLIBS=-L$(OPENSSLDIR)/out -leay32 -lssl32 -lwsock32 -lgdi32 -mwindows
@@ -38,12 +38,3 @@
  		-config $(srcdir)/stunnel.cnf -out stunnel.pem -keyout stunnel.pem; \
  	test $(USE_DH) -eq 0 || $(openssl) gendh $$RND 512 >> stunnel.pem
  	$(openssl) x509 -subject -dates -fingerprint -noout \
-@@ -23,7 +23,7 @@
- 		-in stunnel.pem
- 
- install-data-hook:
--	chmod 0600 $(confdir)/stunnel.pem
-+	chmod 0600 $(DESTDIR)$(confdir)/stunnel.pem
- 
- clean-local:
- 	-rm -f stunnel.rnd
