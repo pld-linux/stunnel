@@ -2,7 +2,7 @@ Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzedzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	3.8
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
@@ -14,7 +14,7 @@ URL:		http://mike.daewoo.com.pl/computer/stunnel/
 BuildRequires:	openssl-devel >= 0.9.4-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		certdir		/var/state/openssl/certs
+%define		certdir		/var/lib/openssl/certs
 
 %description
 The stunnel program is designed to work as SSL encryption wrapper between
