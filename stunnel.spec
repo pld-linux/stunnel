@@ -26,12 +26,12 @@ used  inetd  daemons  like  POP-2,  POP-3  and  IMAP servers
 without any changes in the programs' code.
 
 %description -l pl
-Stunnel umo¿linia stawianie silnie kodowanych tuneli pomiedzy serwerem 
-a komputeram klienta. Przy jego u¿yciu mo¿na ³atwo zrealizoweaæ 
-us³ugi pop3s lub https.
+Stunnel umo¿liwia stawianie silnie kodowanych tuneli pomiêdzy 
+serwerem a komputerem klienta. Przy jego u¿yciu mo¿na ³atwo 
+zrealizowaæ us³ugi pop3s lub https.
 
 %prep
-%setup  -q -n %{name}
+%setup -q -n %{name}
 %patch0 -p1
 
 %build
