@@ -8,6 +8,7 @@ Release:	0.9
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
+# Source0-md5:	2fcdf0311a0ab8a3223293c706a84e97
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
