@@ -16,6 +16,7 @@ Patch5:		%{name}-gen-cert.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	openssl-devel >= 0.9.4-2
+BuildRequires:	openssl-tools >= 0.9.4-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_certdir	/var/lib/stunnel
