@@ -3,9 +3,9 @@ Summary(pl):	Uniwersalne narzedzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	3.6
 Release:	1
+License:	GPL
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
-Copyright:	GPL
 Source0:	http://mike.daewoo.com.pl/computer/stunnel/%{name}-%{version}.tar.gz
 Patch1:		stunnel-DESTDIR.patch
 Patch2:		stunnel-dirs.patch
@@ -16,20 +16,17 @@ BuildRoot:	/tmp/%{name}-%{version}-root
 %define		certdir		/var/state/openssl/certs
 
 %description
-The stunnel program is designed to work  as  SSL  encryption
-wrapper between remote client and local (inetd-startable) or
-remote server. The concept is that having non-SSL aware dae-
-mons  running  on  your  system you can easily setup them to
-communicate with clients over secure SSL channel.
-
-stunnel can be used to add  SSL  functionality  to  commonly
-used  inetd  daemons  like  POP-2,  POP-3  and  IMAP servers
-without any changes in the programs' code.
+The stunnel program is designed to work as SSL encryption wrapper between
+remote client and local (inetd-startable) or remote server. The concept is
+that having non-SSL aware daemons running on your system you can easily
+setup them to communicate with clients over secure SSL channel. stunnel can
+be used to add SSL functionality to commonly used inetd daemons like POP-2,
+POP-3 and IMAP servers without any changes in the programs' code.
 
 %description -l pl
-Stunnel umo¿liwia stawianie silnie kodowanych tuneli pomiêdzy 
-serwerem a komputerem klienta. Przy jego u¿yciu mo¿na ³atwo 
-zrealizowaæ us³ugi pop3s lub https.
+Stunnel umo¿liwia stawianie silnie kodowanych tuneli pomiêdzy serwerem a
+komputerem klienta. Przy jego u¿yciu mo¿na ³atwo zrealizowaæ us³ugi pop3s
+lub https.
 
 %prep
 %setup -q
@@ -38,8 +35,9 @@ zrealizowaæ us³ugi pop3s lub https.
 
 %build
 autoconf
-CFLAGS="$RPM_OPT_FLAGS -DHAVE_GETOPT" \
-LDFLAGS="-s" ; export LDFLAGS
+CFLAGS="$RPM_OPT_FLAGS -DHAVE_GETOPT"
+LDFLAGS="-s"
+export CFLAGS LDFLAGS
 %configure 
 	
 make
@@ -64,4 +62,4 @@ rm -rf $RPM_BUILD_ROOT
 %doc stunnel.exe
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man8/*
-%config(noreplace)  %verify(not size mtime md5) %attr(600,root,root) %{certdir}/stunnel.pem
+%config(noreplace) %verify(not size mtime md5) %attr(600,root,root) %{certdir}/stunnel.pem
