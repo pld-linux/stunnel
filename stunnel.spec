@@ -42,12 +42,12 @@ LDFLAGS="-s"
 export CFLAGS LDFLAGS
 %configure 
 	
-make certdir=%{certdir}
+%{__make} certdir=%{certdir}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make install \
+%{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	certdir=$RPM_BUILD_ROOT/%{certdir}
 	
