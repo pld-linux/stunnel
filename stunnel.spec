@@ -1,13 +1,13 @@
 Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	3.14
-Release:	2
+Version:	3.15
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
-Source0:	http://www.stunnel.org/download/stunnel/src/%{name}-%{version}.tar.gz
+Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-fixargs.patch
 Patch3:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
