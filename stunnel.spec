@@ -7,12 +7,13 @@ Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
 Copyright:	GPL
 Source0:	http://mike.daewoo.com.pl/computer/stunnel/%{name}-%{version}.tar.gz
-Patch0:		stunnel-Makefile.patch
+Patch0:		stunnel-PLD.patch
+Patch1:		stunnel-DESTDIR.patch
 URL:		http://mike.daewoo.com.pl/computer/stunnel/
 BuildRequires:	openssl-devel
 BuildRoot:	/tmp/%{name}-%{version}-root
 
-%define		certsdir	/var/state/openssl/certs
+%define		certdir		/var/state/openssl/certs
 
 %description
 The stunnel program is designed to work  as  SSL  encryption
@@ -31,23 +32,23 @@ serwerem a komputerem klienta. Przy jego u¿yciu mo¿na ³atwo
 zrealizowaæ us³ugi pop3s lub https.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 %patch0 -p1
+%patch1 -p0
 
 %build
-LDFLAGS="-s" ; export LDFLAGS
+CFLAGS="$RPM_OPT_FLAGS -DHAVE_GETOPT" \
+LDFLAGS="-s -lsslcrypto" ; export LDFLAGS
 %configure 
 	
-make \
-	SSLLIBS="-lssl -lsslcrypto" \
-	SSLINCDIR="%{_includedir}/openssl" 
+make
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 make install \
-	DESTDIR="$RPM_BUILD_ROOT%{_prefix}" \
-	CERTDIR="$RPM_BUILD_ROOT%{certsdir}"
+	DESTDIR=$RPM_BUILD_ROOT \
+	certdir=%{certdir}
 	
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	FAQ HISTORY README BUGS 
@@ -61,4 +62,4 @@ rm -rf $RPM_BUILD_ROOT
 %doc %lang(pl) doc.polish/*
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man8/*
-%attr(600,root,root) %{certsdir}/stunnel.pem
+%attr(600,root,root) %{certdir}/stunnel.pem
