@@ -1,0 +1,9 @@
+SERVICE_NAME=imaginaryservice
+SOCK_TYPE=stream
+PROTOCOL=tcp
+PORT=6666
+FLAGS=nowait
+USER=root
+SERVER=tcpd
+DAEMON=/usr/sbin/stunnel
+DAEMONARGS="stunnel /etc/stunnel/stunnel.conf"
