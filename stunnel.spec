@@ -74,7 +74,7 @@ Obsoletes:	%{name}-standalone
 %description inetd
 stunnel acts as inetd service.
 
-%description standalone -l pl
+%description inetd -l pl
 stunnel dzia³aj±cy jako us³uga inetd.
 
 %prep
