@@ -6,4 +6,4 @@ FLAGS=nowait
 USER=root
 SERVER=tcpd
 DAEMON=/usr/sbin/stunnel
-DAEMONARGS="stunnel /etc/stunnel/stunnel.conf"
+DAEMONARGS="/etc/stunnel/stunnel.conf"
