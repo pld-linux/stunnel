@@ -9,8 +9,10 @@ Copyright:	GPL
 Source0:	http://mike.daewoo.com.pl/computer/stunnel/%{name}-%{version}.tar.gz
 Patch0:		stunnel-Makefile.patch
 URL:		http://mike.daewoo.com.pl/computer/stunnel/
-BuildPrereq:	openssl
+BuildPrereq:	openssl-devel
 BuildRoot:   	/tmp/%{name}-%{version}-root
+
+%define		certsdir	/var/state/openssl/certs
 
 %description
 The stunnel program is designed to work  as  SSL  encryption
@@ -38,14 +40,14 @@ LDFLAGS="-s" ; export LDFLAGS
 	
 make \
 	SSLLIBS="-lssl -lsslcrypto" \
-	SSLINCDIR="%{_includedir}/ssl" 
+	SSLINCDIR="%{_includedir}/openssl" 
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 make install \
-	DESTDIR="$RPM_BUILD_ROOT/usr" \
-	CERTDIR="$RPM_BUILD_ROOT/var/state/ssl/certs"
+	DESTDIR="$RPM_BUILD_ROOT%{_prefix}" \
+	CERTDIR="$RPM_BUILD_ROOT%{certsdir}"
 	
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	FAQ HISTORY README BUGS 
@@ -59,7 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc %lang(pl) doc.polish/*
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man8/*
-/var/state/ssl/certs/stunnel.pem
+%attr(600,root,root) %{certsdir}/stunnel.pem
 
 %changelog
 * Thu May 13 1999 Artur Frysiak <wiget@pld.org.pl>
