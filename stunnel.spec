@@ -2,23 +2,23 @@ Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	3.22
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
-Group(de):	Netzwerkwesen/Server
-Group(pl):	Sieciowe/Serwery
-Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
-Patch1:		%{name}-DESTDIR.patch
-Patch2:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
-Patch3:		%{name}-piddir.patch
-Patch4:		%{name}-gen-cert.patch
-Patch5:		%{name}-conf.patch
-Patch6:		%{name}-authpriv.patch
+Source0:	ftp://stunnel.mirt.net/stunnel/OBSOLETE/%{name}-%{version}.tar.gz
+# Source0-md5:	69000d8365b006b3c080a1e2dc9ccba9
+Patch0:		%{name}-DESTDIR.patch
+Patch1:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
+Patch2:		%{name}-piddir.patch
+Patch3:		%{name}-gen-cert.patch
+Patch4:		%{name}-authpriv.patch
+Patch5:		%{name}-ac_fixes.patch
+Patch6:		%{name}-3.22-sigchld.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	openssl-devel >= 0.9.6a
-BuildRequires:	openssl-tools >= 0.9.6a
+BuildRequires:	openssl-devel >= 0.9.6j
+BuildRequires:	openssl-tools >= 0.9.6j
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_certdir	/var/lib/stunnel
@@ -39,15 +39,16 @@ pop3s lub https.
 
 %prep
 %setup -q
-#%patch1 -p1
-#%patch2 -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 %patch3 -p1
-#%patch4 -p1
-#%patch5 -p1
+%patch4 -p1
+%patch5 -p1
 %patch6 -p1
 
 %build
-autoconf
+%{__autoconf}
 %configure \
 	--with-pem-dir=%{_certdir}
 	
@@ -60,8 +61,6 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	certdir=$RPM_BUILD_ROOT/%{_certdir}
 	
-gzip -9nf BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -70,9 +69,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz doc/english/*.gz doc/english/*.html
+%doc BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt doc/english/*.html stunnel.exe
 %doc %lang(pl) doc/polish/*
-%doc stunnel.exe
 %config(noreplace) %verify(not size mtime md5) %attr(600,root,root) %{_certdir}/stunnel.pem
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_libdir}/*

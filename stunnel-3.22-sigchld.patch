@@ -1,0 +1,204 @@
+--- stunnel-3.22/client.c	2001-12-23 14:41:32.000000000 -0500
++++ stunnel-3.22/client.c	2003-04-10 14:52:18.000000000 -0400
+@@ -711,6 +711,7 @@
+         if(!options.foreground)
+             dup2(fd[1], 2);
+         closesocket(fd[1]);
++        signal(SIGCHLD, SIG_DFL);
+         if(c->ip) {
+             putenv("LD_PRELOAD=" libdir "/stunnel.so");
+             /* For Tru64 _RLD_LIST is used instead */
+--- stunnel-3.22/stunnel.c	2001-12-20 02:53:54.000000000 -0500
++++ stunnel-3.22/stunnel.c	2003-04-10 15:06:33.000000000 -0400
+@@ -63,6 +63,7 @@
+ void sockerror(char *);
+ void log_error(int, int, char *);
+ static char *my_strerror(int);
++static void child_exited_handler(int, int);
+ #ifdef USE_FORK
+ static void sigchld_handler(int);
+ #endif
+@@ -74,6 +75,7 @@
+ #endif
+ 
+ server_options options;
++int signal_pipe[2];
+ 
+ #ifdef USE_WIN32
+ /*
+@@ -138,6 +140,10 @@
+     sthreads_init(); /* initialize threads */
+     log(LOG_NOTICE, "%s", stunnel_info());
+     if(options.option & OPT_DAEMON) { /* daemon mode */
++        if(pipe(signal_pipe)) {
++            ioerror("pipe");
++            exit(1);
++        }
+ #ifndef USE_WIN32
+         if(!(options.option & OPT_FOREGROUND))
+             daemonize();
+@@ -165,6 +171,9 @@
+     struct sockaddr_in addr;
+     int addrlen;
+     int max_clients, fds_ulimit=-1;
++    int ready;
++    char c;
++    fd_set read_fds;
+ 
+ #if defined HAVE_SYSCONF
+     fds_ulimit=sysconf(_SC_OPEN_MAX);
+@@ -188,7 +197,7 @@
+         log(LOG_ERR, "Memory allocation failed");
+         exit(1);
+     }
+-    max_clients=max_fds>=256 ? max_fds*125/256 : (max_fds-6)/2;
++    max_clients=max_fds>=256 ? max_fds*125/256 : (max_fds-8)/2;
+     log(LOG_NOTICE, "FD_SETSIZE=%d, file ulimit=%d%s -> %d clients allowed",
+         FD_SETSIZE, fds_ulimit, fds_ulimit<0?" (unlimited)":"", max_clients);
+     ls=listen_local();
+@@ -204,8 +213,28 @@
+     while(1) {
+         addrlen=sizeof(addr);
+         do {
+-            s=accept(ls, (struct sockaddr *)&addr, &addrlen);
+-        } while(s<0 && get_last_socket_error()==EINTR);
++            FD_ZERO(&read_fds);
++            FD_SET(ls, &read_fds);
++            FD_SET(signal_pipe[0], &read_fds);
++            ready=select((ls > signal_pipe[0]) ? ls + 1 : signal_pipe[0] + 1,
++                         &read_fds, NULL, NULL, NULL);
++        } while(ready<=0 && get_last_error()==EINTR);
++        /* reap a child which exited, decrementing the client count if we forked it */
++        if(FD_ISSET(signal_pipe[0], &read_fds)) {
++            read(signal_pipe[0], &c, 1);
++#ifdef USE_FORK
++            child_exited_handler(1, 0); /* decrement the client count */
++#else
++            child_exited_handler(0, 1); /* the parent thread already decremented
++                                           the client count */
++#endif
++        }
++        /* if we didn't also have a new connection, go back to waiting */
++        if(!FD_ISSET(ls, &read_fds)) {
++            continue;
++        }
++        /* if we also have a new connection, process it */
++        s=accept(ls, (struct sockaddr *)&addr, &addrlen);
+         if(s<0) {
+             sockerror("accept");
+             continue;
+@@ -574,31 +603,51 @@
+     }
+ }
+ 
+-#ifdef USE_FORK
+-static void sigchld_handler(int sig) { /* Dead children detected */
++static void child_exited_handler(int consume_client, int local) { /* Dead children detected */
+     int pid, status;
+ 
+ #ifdef HAVE_WAIT_FOR_PID
+     while((pid=wait_for_pid(-1, &status, WNOHANG))>0) {
+-        options.clients--; /* One client less */
+ #else
+     if((pid=wait(&status))>0) {
+-        options.clients--; /* One client less */
+ #endif
++        if(consume_client) {
++            enter_critical_section(CRIT_CLIENTS); /* for multi-cpu machines */
++            options.clients--; /* One client less */
++            leave_critical_section(CRIT_CLIENTS); /* for multi-cpu machines */
++        }
+ #ifdef WIFSIGNALED
+         if(WIFSIGNALED(status)) {
+-            log(LOG_DEBUG, "%s[%d] terminated on signal %d (%d left)",
+-                options.servname, pid, WTERMSIG(status), options.clients);
++            if(local)
++                log(LOG_DEBUG, "Local process %s (PID=%lu) terminated on signal %d",
++                    options.servname, pid, WTERMSIG(status));
++            else
++                log(LOG_DEBUG, "%s[%d] terminated on signal %d (%d left)",
++                    options.servname, pid, WTERMSIG(status), options.clients);
+         } else {
+-            log(LOG_DEBUG, "%s[%d] finished with code %d (%d left)",
+-                options.servname, pid, WEXITSTATUS(status), options.clients);
++            if(local)
++                log(LOG_DEBUG, "Local process %s (PID=%lu) finished with code %d",
++                    options.servname, pid, WEXITSTATUS(status));
++            else
++                log(LOG_DEBUG, "%s[%d] finished with code %d (%d left)",
++                    options.servname, pid, WEXITSTATUS(status),
++                    options.clients);
+         }
+     }
+ #else
+-        log(LOG_DEBUG, "%s[%d] finished with code %d (%d left)",
+-            options.servname, pid, status, options.clients);
++        if(local)
++            log(LOG_DEBUG, "Local process %s (PID=%lu) finished with status %d",
++                options.servname, pid, status);
++        else
++            log(LOG_DEBUG, "%s[%d] finished with code %d (%d left)",
++                options.servname, pid, status, options.clients);
+     }
+ #endif
++}
++
++#ifdef USE_FORK
++static void sigchld_handler(int sig) { /* Dead children detected */
++    write(signal_pipe[1], "", 1);
+     signal(SIGCHLD, sigchld_handler);
+ }
+ #endif
+@@ -606,26 +655,7 @@
+ #ifndef USE_WIN32
+ 
+ void local_handler(int sig) { /* Dead of local (-l) process detected */
+-    int pid, status;
+-
+-#ifdef HAVE_WAIT_FOR_PID
+-    while((pid=wait_for_pid(-1, &status, WNOHANG))>0) {
+-#else
+-    if((pid=wait(&status))>0) {
+-#endif
+-#ifdef WIFSIGNALED
+-        if(WIFSIGNALED(status)) {
+-            log(LOG_DEBUG, "Local process %s (PID=%lu) terminated on signal %d",
+-                options.servname, pid, WTERMSIG(status));
+-        } else {
+-            log(LOG_DEBUG, "Local process %s (PID=%lu) finished with code %d",
+-                options.servname, pid, WEXITSTATUS(status));
+-        }
+-#else
+-        log(LOG_DEBUG, "Local process %s (PID=%lu) finished with status %d",
+-            options.servname, pid, status);
+-#endif
+-    }
++    write(signal_pipe[1], "", 1);
+     signal(SIGCHLD, local_handler);
+ }
+ 
+--- stunnel-3.22/sthreads.c	2001-11-11 10:06:22.000000000 -0500
++++ stunnel-3.22/sthreads.c	2003-04-10 14:52:18.000000000 -0400
+@@ -180,6 +180,11 @@
+     return 0L;
+ }
+ 
++extern int signal_pipe[2];
++static void null_handler(int signum) {
++    signal(SIGCHLD, null_handler);
++}
++
+ int create_client(int ls, int s, void *(*cli)(void *)) {
+     switch(fork()) {
+     case -1:    /* error */
+@@ -187,7 +192,9 @@
+         return -1;
+     case  0:    /* child */
+         closesocket(ls);
+-        signal(SIGCHLD, local_handler);
++        signal(SIGCHLD, null_handler);
++        close(signal_pipe[0]);
++        close(signal_pipe[1]);
+         cli((void *)s);
+         exit(0);
+     default:    /* parent */
