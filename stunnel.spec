@@ -9,7 +9,7 @@ Copyright:	GPL
 Source0:	http://mike.daewoo.com.pl/computer/stunnel/%{name}-%{version}.tar.gz
 Patch0:		stunnel-Makefile.patch
 URL:		http://mike.daewoo.com.pl/computer/stunnel/
-BuildPrereq:	openssl-devel
+BuildRequires:	openssl-devel
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %define		certsdir	/var/state/openssl/certs
