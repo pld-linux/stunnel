@@ -57,11 +57,10 @@ rm -f missing
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig} \
-	-d $RPM_BUILD_ROOT%{_mandir}/pl/man8 \
-	-d $RPM_BUILD_ROOT%{_var}/run/stunnel
+install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{_mandir}/pl/man8,%{_var}/run/stunnel}
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT/%{_mandir}/man8/stunnel.pl.8* $RPM_BUILD_ROOT/%{_mandir}/pl/man8/
 
