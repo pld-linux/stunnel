@@ -1,8 +1,5 @@
-Summary:	-
-Summary(de):	-
-Summary(fr):	-
-Summary(pl):	-
-Summary(tr):	-
+Summary:	Universal SSL tunnel
+Summary(pl):	Uniwersalne narzedzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	3.2
 Release:	1
@@ -11,35 +8,33 @@ Group(pl):	Sieciowe/Serwery
 Copyright:	GPL
 Source0:	http://mike.daewoo.com.pl/computer/stunnel/%{name}-%{version}.tar.gz
 Patch0:		stunnel-Makefile.patch
-Patch1:		-
-Patch2:		-
 URL:		http://mike.daewoo.com.pl/computer/stunnel/
 BuildPrereq:	openssl
 BuildRoot:   	/tmp/%{name}-%{version}-root
 
 %description
+The stunnel program is designed to work  as  SSL  encryption
+wrapper between remote client and local (inetd-startable) or
+remote server. The concept is that having non-SSL aware dae-
+mons  running  on  your  system you can easily setup them to
+communicate with clients over secure SSL channel.
 
-%description -l de
-
-%description -l fr
+stunnel can be used to add  SSL  functionality  to  commonly
+used  inetd  daemons  like  POP-2,  POP-3  and  IMAP servers
+without any changes in the programs' code.
 
 %description -l pl
-
-%description -l tr
+Stunnel umo¿linia stawianie silnie kodowanych tuneli pomiedzy serwerem 
+a komputeram klienta. Przy jego u¿yciu mo¿na ³atwo zrealizoweaæ 
+us³ugi pop3s lub https.
 
 %prep
 %setup  -q -n %{name}
 %patch0 -p1
-#%patch1 -p1
-#%patch2 -p1
 
 %build
-#(autoheader/autoconf/automake)
-CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
-./configure \
-	--prefix=/usr \
-	--target=%{_target_platform} \
-	--host=%{_host} \
+LDFLAGS="-s" ; export LDFLAGS
+%configure 
 	
 make \
 	SSLLIBS="-lssl -lsslcrypto" \
@@ -54,14 +49,6 @@ make install \
 	
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	FAQ HISTORY README BUGS 
-
-%pre
-
-%preun
-
-%post
-
-%postun
 
 %clean
 rm -rf $RPM_BUILD_ROOT
