@@ -45,7 +45,7 @@ pop3s lub https.
 
 %build
 autoconf
-CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -DHAVE_GETOPT"
+CFLAGS="%{rpmcflags} -DHAVE_GETOPT"
 %configure \
 	--with-pem-dir=%{_certdir}
 	
