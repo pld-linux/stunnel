@@ -1,0 +1,7 @@
+# Customized settings for stunnel
+
+# Define nice level for stunnel
+SERVICE_RUN_NICE_LEVEL="+0"
+
+# Where is stunnel config?
+STUNNEL_CONFIG="/etc/stunnel/stunnel.conf"

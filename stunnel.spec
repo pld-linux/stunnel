@@ -2,10 +2,12 @@ Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	4.04
-Release:	0.2
+Release:	0.9
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
+Source1:	%{name}.init
+Source2:	%{name}.sysconfig
 Patch0:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
 Patch1:		%{name}-authpriv.patch
 Patch2:		%{name}-ac_fixes.patch
@@ -52,11 +54,16 @@ rm -f missing
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig} \
+	-d $RPM_BUILD_ROOT%{_mandir}/pl/man8 \
+	-d $RPM_BUILD_ROOT%{_var}/run/stunnel
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT/%{_mandir}/man8/stunnel.pl.8* $RPM_BUILD_ROOT/%{_mandir}/pl/man8/
+
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/stunnel
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/stunnel
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -71,6 +78,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc $RPM_BUILD_ROOT%{_datadir}/doc/stunnel/examples/{c*,i*,stunnel.init}
 %doc %lang(pl) doc/pl/* doc/stunnel.pl.html
 %dir /etc/stunnel
+%attr(755,root,root) /etc/rc.d/init.d/stunnel
+%attr(600,root,root) /etc/sysconfig/stunnel
+%attr(700,nobody,nobody) %{_var}/run/stunnel
 %config(noreplace) %verify(not size mtime md5) /etc/stunnel/*
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_libdir}/*
