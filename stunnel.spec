@@ -12,7 +12,7 @@ Patch1:		stunnel-DESTDIR.patch
 Patch2:		stunnel-3.4a-fix.patch
 Patch3:		stunnel-dirs.patch
 URL:		http://mike.daewoo.com.pl/computer/stunnel/
-BuildRequires:	openssl-devel
+BuildRequires:	openssl-devel >= 0.9.4
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %define		certdir		/var/state/openssl/certs
