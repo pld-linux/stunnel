@@ -32,7 +32,6 @@ Requires(pre):	/usr/sbin/useradd
 Requires(postun):	/usr/sbin/userdel
 Requires(postun):	/usr/sbin/groupdel
 Requires(post,preun):	/sbin/chkconfig
-Requires(post,postun):	/sbin/ldconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -86,7 +85,6 @@ stunnel dzia³aj±cy jako us³uga inetd.
 %patch6 -p1
 
 %build
-%{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__automake}
@@ -102,7 +100,7 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig/rc-inetd},%{_mandir}/{pl,
 
 mv -f $RPM_BUILD_ROOT%{_mandir}/man8/stunnel.fr.8 $RPM_BUILD_ROOT%{_mandir}/fr/man8/stunnel.8
 mv -f $RPM_BUILD_ROOT%{_mandir}/man8/stunnel.pl.8 $RPM_BUILD_ROOT%{_mandir}/pl/man8/stunnel.8
-mv -f $RPM_BUILD_ROOT/etc/stunnel/stunnel.conf-sample $RPM_BUILD_ROOT/etc/stunnel/stunnel.conf
+mv -f $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf-sample $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/stunnel
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/stunnel
@@ -110,8 +108,6 @@ install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/stunnel
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-
-%post   -p /sbin/ldconfig
 
 %pre
 if [ -n "`getgid stunnel`" ]; then
@@ -132,7 +128,6 @@ else
 fi
 
 %postun 
-/sbin/ldconfig
 if [ "$1" = "0" ]; then
 	/usr/sbin/userdel stunnel
 	/usr/sbin/groupdel stunnel
@@ -174,10 +169,9 @@ fi
 %doc %lang(fr) doc/stunnel.fr.html
 %doc %lang(pl) doc/pl/* doc/stunnel.pl.html
 %attr(750,stunnel,stunnel) %{_var}/run/stunnel
-%dir /etc/stunnel
-%config(noreplace) %verify(not size mtime md5) /etc/stunnel/*
+%dir %{_sysconfdir}/stunnel
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/stunnel/*
 %attr(755,root,root) %{_sbindir}/*
-%attr(755,root,root) %{_libdir}/*
 %{_mandir}/man8/*
 %lang(fr) %{_mandir}/fr/man8/*
 %lang(pl) %{_mandir}/pl/man8/*
@@ -185,7 +179,7 @@ fi
 %files standalone
 %defattr(644,root,root,755)
 %attr(754,root,root) /etc/rc.d/init.d/stunnel
-/etc/sysconfig/stunnel
+%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/stunnel
 
 %files inetd
 %defattr(644,root,root,755)
