@@ -9,6 +9,8 @@ Copyright:	GPL
 Source0:	http://mike.daewoo.com.pl/computer/stunnel/%{name}-%{version}.tar.gz
 Patch0:		stunnel-PLD.patch
 Patch1:		stunnel-DESTDIR.patch
+Patch2:		stunnel-3.4a-fix.patch
+Patch3:		stunnel-dirs.patch
 URL:		http://mike.daewoo.com.pl/computer/stunnel/
 BuildRequires:	openssl-devel
 BuildRoot:	/tmp/%{name}-%{version}-root
@@ -34,7 +36,9 @@ zrealizowaæ us³ugi pop3s lub https.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 CFLAGS="$RPM_OPT_FLAGS -DHAVE_GETOPT" \
@@ -48,7 +52,7 @@ rm -rf $RPM_BUILD_ROOT
 
 make install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	certdir=%{certdir}
+	certdir=$RPM_BUILD_ROOT%{certdir}
 	
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	FAQ HISTORY README BUGS 
@@ -62,4 +66,4 @@ rm -rf $RPM_BUILD_ROOT
 %doc %lang(pl) doc.polish/*
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man8/*
-%attr(600,root,root) %{certdir}/stunnel.pem
+%config(noreplace)  %verify(not size mtime md5) %attr(600,root,root) %{certdir}/stunnel.pem
