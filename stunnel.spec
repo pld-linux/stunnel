@@ -1,19 +1,18 @@
 Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	3.22
-Release:	2
+Version:	3.26
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	ftp://stunnel.mirt.net/stunnel/OBSOLETE/%{name}-%{version}.tar.gz
-# Source0-md5:	69000d8365b006b3c080a1e2dc9ccba9
+Source0:	http://www.stunnel.org/download/stunnel/src/%{name}-%{version}.tar.gz
+# Source0-md5:	e2cffe2f2753416d37ea1619c0d0f96e
 Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
 Patch2:		%{name}-piddir.patch
 Patch3:		%{name}-gen-cert.patch
 Patch4:		%{name}-authpriv.patch
 Patch5:		%{name}-ac_fixes.patch
-Patch6:		%{name}-3.22-sigchld.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -45,7 +44,6 @@ pop3s lub https.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 %build
 %{__autoconf}
@@ -69,7 +67,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt doc/english/*.html stunnel.exe
+%doc BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt doc/english/*.html
 %doc %lang(pl) doc/polish/*
 %config(noreplace) %verify(not size mtime md5) %attr(600,root,root) %{_certdir}/stunnel.pem
 %attr(755,root,root) %{_sbindir}/*
