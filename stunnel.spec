@@ -2,7 +2,7 @@ Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	3.22
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -14,6 +14,7 @@ Patch2:		%{name}-piddir.patch
 Patch3:		%{name}-gen-cert.patch
 Patch4:		%{name}-authpriv.patch
 Patch5:		%{name}-ac_fixes.patch
+Patch6:		%{name}-3.22-sigchld.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -45,9 +46,10 @@ pop3s lub https.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
-autoconf
+%{__autoconf}
 %configure \
 	--with-pem-dir=%{_certdir}
 	
