@@ -1,17 +1,17 @@
 Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzedzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	3.8
-Release:	5
+Version:	3.9
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
+Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
-Source0:	http://mike.daewoo.com.pl/computer/stunnel/%{name}-%{version}.tar.gz
+Source0:	http://www.stunnel.org/download/stunnel/src/%{name}-%{version}.tar.gz
 Patch1:		%{name}-DESTDIR.patch
-Patch2:		%{name}-dirs.patch
-Patch3:		%{name}-fixargs.patch
-PAtch4:		stunnel-gethostbyname_is_in_libc_aka_no_libnsl.patch
-URL:		http://mike.daewoo.com.pl/computer/stunnel/
+Patch2:		%{name}-fixargs.patch
+Patch3:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
+URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	openssl-devel >= 0.9.4-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -35,16 +35,13 @@ pop3s lub https.
 %prep
 %setup -q
 %patch1 -p1
-%patch2 -p1
-%patch3 -p0
-%patch4 -p1
+%patch2 -p0
+%patch3 -p1
 
 %build
 autoconf
-CFLAGS="$RPM_OPT_FLAGS -DHAVE_GETOPT"
-LDFLAGS="-s"
-export CFLAGS LDFLAGS
-%configure 
+CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} -DHAVE_GETOPT"
+%configure
 	
 %{__make} certdir=%{certdir}
 
@@ -55,10 +52,9 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	certdir=$RPM_BUILD_ROOT/%{certdir}
 	
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
-	FAQ HISTORY README BUGS 
+gzip -9nf FAQ HISTORY README BUGS 
 
-%post -p /sbin/ldconfig
+%post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %clean
