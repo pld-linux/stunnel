@@ -1,23 +1,50 @@
---- stunnel-3.8/Makefile.in.wiget	Tue Feb 22 13:08:16 2000
-+++ stunnel-3.8/Makefile.in	Mon Feb 28 13:10:25 2000
-@@ -2,13 +2,13 @@
- # Makefile for stunnel by Michal Trojnara 1998-2000 #
- #####################################################
+diff -Nru stunnel-3.9/Makefile.in stunnel-3.9.new/Makefile.in
+--- stunnel-3.9/Makefile.in	Sat Oct 21 16:02:03 2000
++++ stunnel-3.9.new/Makefile.in	Wed Dec 20 03:43:26 2000
+@@ -20,7 +20,7 @@
+ CFLAGS=@CFLAGS@ @DEFS@ -Dlibdir=\"$(libdir)\" -DPIDDIR=\"$(piddir)\"
+ LIBS=@LIBS@
+ OBJS=stunnel.o ssl.o protocol.o sthreads.o pty.o log.o
+-DESTFILES=$(sbindir)/stunnel $(libdir)/stunnel.so $(man8dir)/stunnel.8  $(PEM_DIR)/stunnel.pem
++DESTFILES=$(DESTDIR)$(sbindir)/stunnel $(DESTDIR)$(libdir)/stunnel.so $(DESTDIR)$(man8dir)/stunnel.8 $(DESTDIR)$(PEM_DIR)/stunnel.pem
  
--prefix=@prefix@
--exec_prefix=@exec_prefix@
--sbindir=@sbindir@
--libdir=@libdir@
--man8dir=@mandir@/man8
--piddir=@localstatedir@/stunnel
--ssldir=@ssldir@
-+prefix=$(DESTDIR)@prefix@
-+exec_prefix=$(DESTDIR)@exec_prefix@
-+sbindir=$(DESTDIR)@sbindir@
-+libdir=$(DESTDIR)@libdir@
-+man8dir=$(DESTDIR)@mandir@/man8
-+piddir=$(DESTDIR)@localstatedir@/stunnel
-+ssldir=$(DESTDIR)@ssldir@
- certdir=$(ssldir)/certs
- @SET_MAKE@
- VERSION=stunnel-@VERSION@
+ # standard external rules
+ 
+@@ -51,8 +51,8 @@
+ 	gpg --yes --armor --detach-sign ../dist/$(VERSION).tar.gz
+ 
+ installdirs: mkinstalldirs
+-	./mkinstalldirs $(sbindir) $(libdir) $(man8dir) $(PEM_DIR) $(piddir)
+-	chmod a=rwx,+t $(piddir)
++	./mkinstalldirs $(DESTDIR)$(sbindir) $(DESTDIR)$(libdir) $(DESTDIR)$(man8dir) $(DESTDIR)$(PEM_DIR) $(DESTDIR)$(piddir)
++	chmod a=rwx,+t $(DESTDIR)$(piddir)
+ 
+ # non-standard external rules
+ 
+@@ -87,18 +87,18 @@
+ 	$(ssldir)/bin/openssl x509 -subject -dates -fingerprint -noout \
+ 		-in stunnel.pem
+ 
+-$(sbindir)/stunnel: stunnel
+-	$(INSTALL) -m 711 stunnel $(sbindir)
++$(DESTDIR)$(sbindir)/stunnel: stunnel
++	$(INSTALL) -m 711 stunnel $(DESTDIR)$(sbindir)
+ 
+-$(libdir)/stunnel.so: stunnel.so
+-	test -s stunnel.so && $(INSTALL) -m 755 stunnel.so $(libdir)
++$(DESTDIR)$(libdir)/stunnel.so: stunnel.so
++	test -s stunnel.so && $(INSTALL) -m 755 stunnel.so $(DESTDIR)$(libdir)
+ 
+-$(man8dir)/stunnel.8: stunnel.8
+-	$(INSTALL) -m 644 stunnel.8 $(man8dir)
++$(DESTDIR)$(man8dir)/stunnel.8: stunnel.8
++	$(INSTALL) -m 644 stunnel.8 $(DESTDIR)$(man8dir)
+ 
+-$(PEM_DIR)/stunnel.pem: stunnel.pem
++$(DESTDIR)$(PEM_DIR)/stunnel.pem: stunnel.pem
+ 	if [ -n "$(PEM_DIR)" ] ; then \
+-		$(INSTALL) -m 600 stunnel.pem $(PEM_DIR); \
++		$(INSTALL) -m 600 stunnel.pem $(DESTDIR)$(PEM_DIR); \
+ 	fi
+ 
+ ../dist/$(VERSION).exe: stunnel.exe
