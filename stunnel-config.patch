@@ -1,26 +1,31 @@
---- stunnel-4.05/tools/stunnel.conf-sample.in.orig	2004-05-09 02:40:26.000000000 +0200
-+++ stunnel-4.05/tools/stunnel.conf-sample.in	2004-05-09 02:42:32.000000000 +0200
-@@ -2,12 +2,12 @@
- # Copyright by Michal Trojnara 2002
+diff -burN stunnel-4.06.orig/tools/stunnel.conf-sample.in stunnel-4.06/tools/stunnel.conf-sample.in
+--- stunnel-4.06.orig/tools/stunnel.conf-sample.in	2004-12-26 18:33:15.119066912 +0100
++++ stunnel-4.06/tools/stunnel.conf-sample.in	2004-12-26 19:14:48.552007488 +0100
+@@ -3,15 +3,15 @@
+ ; Please make sure you understand them (especially the effect of chroot jail)
  
- # Comment it out on Win32
+ ; Certificate/key is needed in server mode and optional in client mode
 -cert = @prefix@/etc/stunnel/mail.pem
--chroot = @prefix@/var/run/stunnel/
-+#cert = /etc/stunnel/mail.pem
-+#chroot = @prefix@/var/run/stunnel/
- # PID is created inside chroot jail
--pid = /stunnel.pid
+-;key = @prefix@/etc/stunnel/mail.pem
++;cert = /etc/stunnel/mail.pem
++;key = /etc/stunnel/mail.pem
+ 
+ ; Some security enhancements for UNIX systems - comment them out on Win32
+-chroot = @prefix@/var/stunnel/
 -setuid = nobody
 -setgid = nogroup
-+pid = /var/run/stunnel/stunnel.pid
++;chroot = @prefix@/var/stunnel/
 +setuid = stunnel
 +setgid = stunnel
+ ; PID is created inside chroot jail
+-pid = /stunnel.pid
++pid = /var/run/stunnel/stunnel.pid
  
- # Workaround for Eudora bug
- #options = DONT_INSERT_EMPTY_FRAGMENTS
-@@ -33,26 +33,26 @@
+ ; Some performance tunings
+ socket = l:TCP_NODELAY=1
+@@ -41,17 +41,17 @@
  
- # Service-level configuration
+ ; Service-level configuration
  
 -[pop3s]
 -accept  = 995
@@ -33,35 +38,17 @@
 -[ssmtp]
 -accept  = 465
 -connect = 25
--
--[s1]
--accept  = 5000
--connect = mail.osw.pl:110
--# delay = yes
--
--[s2]
--accept  = 5001
--connect = mail.osw.pl:25
-+#[pop3s]
-+#accept  = 995
-+#connect = 110
++;[pop3s]
++;accept  = 995
++;connect = 110
 +
-+#[imaps]
-+#accept  = 993
-+#connect = 143
++;[imaps]
++;accept  = 993
++;connect = 143
 +
-+#[ssmtp]
-+#accept  = 465
-+#connect = 25
-+
-+#[s1]
-+#accept  = 5000
-+#connect = mail.osw.pl:110
-+#delay = yes
-+
-+#[s2]
-+#accept  = 5001
-+#connect = mail.osw.pl:25
++;[ssmtp]
++;accept  = 465
++;connect = 25
  
- #[https]
- #accept  = 443
+ ;[https]
+ ;accept  = 443

@@ -1,29 +1,11 @@
---- stunnel-3.22/configure.ac~	Mon Jan  7 14:08:57 2002
-+++ stunnel-3.22/configure.ac	Mon Jan  7 14:08:57 2002
-@@ -15,6 +15,13 @@
- AC_DISABLE_STATIC
- AC_PROG_LIBTOOL
- 
-+dnl Checks for integer sizes
-+AC_CHECK_SIZEOF(unsigned char)
-+AC_CHECK_SIZEOF(unsigned short)
-+AC_CHECK_SIZEOF(unsigned int)
-+AC_CHECK_SIZEOF(unsigned long)
+diff -burN stunnel-4.06.orig/configure.ac stunnel-4.06/configure.ac
+--- stunnel-4.06.orig/configure.ac	2004-12-26 18:33:15.124066152 +0100
++++ stunnel-4.06/configure.ac	2004-12-26 18:34:28.262947352 +0100
+@@ -33,6 +33,7 @@
+ AC_CHECK_SIZEOF(unsigned short)
+ AC_CHECK_SIZEOF(unsigned int)
+ AC_CHECK_SIZEOF(unsigned long)
 +AC_CHECK_SIZEOF(unsigned long long)
-+
- checkssldir() { :
-     if test -f "$1/include/openssl/ssl.h"; then
-         AC_DEFINE(HAVE_OPENSSL)
-@@ -194,12 +201,6 @@
- dnl Checks for library functions.
- AC_CHECK_FUNCS(snprintf vsnprintf openpty _getpty daemon waitpid wait4 sysconf getrlimit pthread_sigmask setgroups localtime_r chroot endhostent)
  
--dnl Checks for integer sizes
--AC_CHECK_SIZEOF(unsigned char)
--AC_CHECK_SIZEOF(unsigned short)
--AC_CHECK_SIZEOF(unsigned int)
--AC_CHECK_SIZEOF(unsigned long)
--
- LIBS="$LIBS $wrap_LIB"
- 
- CPPFLAGS="$CPPFLAGS -DLIBDIR=\\\"$libdir\\\" -DCONFDIR=\\\"$sysconfdir/stunnel\\\" -DPIDFILE=\\\"$localstatedir/run/stunnel.pid\\\""
+ AC_MSG_NOTICE([**************************************** PTY device files])
+ AC_CHECK_FILE("/dev/ptmx", AC_DEFINE(HAVE_DEV_PTMX))

@@ -1,35 +1,18 @@
---- stunnel-4.04/src/Makefile.am.orig	Sun Jan 12 19:16:35 2003
-+++ stunnel-4.04/src/Makefile.am	Sun Jan 12 19:17:30 2003
-@@ -21,26 +21,8 @@
- # Red Hat "by design" bug #82369
- INCLUDES = -I/usr/kerberos/include
+diff -burN stunnel-4.06.orig/tools/Makefile.am stunnel-4.06/tools/Makefile.am
+--- stunnel-4.06.orig/tools/Makefile.am	2004-12-26 18:33:15.119066912 +0100
++++ stunnel-4.06/tools/Makefile.am	2004-12-26 19:34:37.002335576 +0100
+@@ -13,8 +13,8 @@
+ 	stunnel.spec stunnel.init
  
--# Win32 executable
--
--EXTRA_DIST = stunnel.exe make.bat Makefile.w32
--EXTRA_PROGRAMS = stunnel.exe
--stunnel_exe_SOURCES =  $(common_headers) $(common_sources) $(win32_sources)
--
--OPENSSLDIR=/usr/src/openssl-0.9.7c
--WINCFLAGS=-O2 -Wall -I$(OPENSSLDIR)/outinc \
--	-DUSE_WIN32=1 -DHAVE_OPENSSL=1 -DVERSION=\"@VERSION@\"
--WINLIBS=-L$(OPENSSLDIR)/out -leay32 -lssl32 -lwsock32 -lgdi32 -mwindows
--WINOBJ=client.obj log.obj options.obj protocol.obj sselect.obj \
--    ssl.obj sthreads.obj stunnel.obj gui.obj resources.obj
--WINGCC=i586-mingw32msvc-gcc
--WINDRES=i586-mingw32msvc-windres
--
- SUFFIXES = .c .rc .obj
- 
--stunnel.exe: $(WINOBJ)
--	$(WINGCC) -s -o stunnel.exe $(WINOBJ) $(WINLIBS)
--
- .c.obj: $(common_headers)
- 	$(WINGCC) $(WINCFLAGS) -c $< -o $@
- 
---- stunnel-4.04/tools/Makefile.am	Sun Jan 12 05:22:12 2003
-+++ stunnel-4.04/tools/Makefile.am.new	Sun Jan 12 19:22:57 2003
-@@ -16,7 +16,7 @@
+ install-data-local:
+-	mkdir -p $(localstatedir)/stunnel
+-	-chmod a=rwx,+t $(localstatedir)/stunnel
++	mkdir -p $(DESTDIR)$(localstatedir)/stunnel
++	-chmod a=rwx,+t $(DESTDIR)$(localstatedir)/stunnel
+ 	-uname | grep SunOS && \
+ 		mkdir -p $(localstatedir)/stunnel/dev && \
+ 		chmod u=rwx,go=rx $(localstatedir)/stunnel/dev && \
+@@ -27,7 +27,7 @@
  		then dd if="$(RANDOM_FILE)" of=stunnel.rnd bs=256 count=1; \
  			RND="-rand stunnel.rnd"; \
  		else RND=""; fi; \
