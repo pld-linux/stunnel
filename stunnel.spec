@@ -75,9 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+# note: this COPYING contains general information not GPL text
 %doc AUTHORS BUGS COPYING CREDITS ChangeLog NEWS PORTS README TODO doc/en/* doc/stunnel.html
-%doc src/stunnel.exe
-%doc $RPM_BUILD_ROOT%{_datadir}/doc/stunnel/examples/{c*,i*,stunnel.init}
+%doc src/stunnel.exe  tools/{ca.*,importCA.*}
 %doc %lang(pl) doc/pl/* doc/stunnel.pl.html
 %dir /etc/stunnel
 %attr(755,root,root) /etc/rc.d/init.d/stunnel
