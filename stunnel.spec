@@ -43,7 +43,7 @@ CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 	
 make \
 	SSLLIBS="-lssl -lsslcrypto" \
-	SSLINCDIR="/usr/include/ssl" 
+	SSLINCDIR="%{_includedir}/ssl" 
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -69,7 +69,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc {FAQ,HISTORY,README,BUGS}.gz
-%attr(755,root,root) /usr/sbin/*
+%attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man8/*
 /var/state/ssl/certs/stunnel.pem
 
