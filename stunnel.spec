@@ -10,7 +10,7 @@ Source0:	http://mike.daewoo.com.pl/computer/stunnel/%{name}-%{version}.tar.gz
 Patch0:		stunnel-Makefile.patch
 URL:		http://mike.daewoo.com.pl/computer/stunnel/
 BuildPrereq:	openssl-devel
-BuildRoot:   	/tmp/%{name}-%{version}-root
+BuildRoot:	/tmp/%{name}-%{version}-root
 
 %define		certsdir	/var/state/openssl/certs
 
