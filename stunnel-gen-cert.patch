@@ -1,11 +1,11 @@
---- stunnel-3.9/Makefile.in~	Sun Dec 31 04:46:19 2000
-+++ stunnel-3.9/Makefile.in	Sun Dec 31 04:53:44 2000
-@@ -82,7 +82,7 @@
- $(OBJS): Makefile common.h
+--- stunnel-3.22/Makefile.in.orig	Mon Jan  7 14:16:47 2002
++++ stunnel-3.22/Makefile.in	Mon Jan  7 14:18:15 2002
+@@ -103,7 +103,7 @@
+ $(OBJS): Makefile $(HEADERS)
  
  stunnel.pem: stunnel.cnf
--	$(ssldir)/bin/openssl req -new -x509 -days 365 -nodes \
-+	echo -e "\n\n\n\n\n\n" | $(ssldir)/bin/openssl req -new -x509 -days 365 -nodes \
+-	$(openssl) req -new -x509 -days 365 -nodes \
++	echo -e "\n\n\n\n\n\n" | $(openssl) req -new -x509 -days 365 -nodes \
  		-config stunnel.cnf -out stunnel.pem -keyout stunnel.pem
- 	$(ssldir)/bin/openssl x509 -subject -dates -fingerprint -noout \
- 		-in stunnel.pem
+ 	test $(NO_DH) -eq 1 || test ! -f $(RANDOM_FILE) || \
+                 $(openssl) gendh -rand $(RANDOM_FILE) 512 >> stunnel.pem

@@ -1,16 +1,26 @@
-diff -Nur stunnel-3.20-orig/Makefile.in stunnel-3.20/Makefile.in
---- stunnel-3.20-orig/Makefile.in	Tue Oct 16 11:57:38 2001
-+++ stunnel-3.20/Makefile.in	Tue Oct 16 12:00:25 2001
-@@ -20,7 +20,7 @@
- CFLAGS=@CFLAGS@ @DEFS@ -Dlibdir=\"$(libdir)\" -DPIDDIR=\"$(piddir)\"
+--- stunnel-3.22/Makefile.in.orig	Mon Jan  7 14:24:18 2002
++++ stunnel-3.22/Makefile.in	Mon Jan  7 14:30:24 2002
+@@ -24,7 +24,7 @@
  LIBS=@LIBS@
- OBJS=stunnel.o ssl.o client.o protocol.o sthreads.o pty.o log.o options.o
+ HEADERS=common.h prototypes.h client.h
+ OBJS=client.o stunnel.o ssl.o protocol.o sthreads.o pty.o log.o options.o
 -DESTFILES=$(sbindir)/stunnel $(libdir)/stunnel.so $(man8dir)/stunnel.8  $(PEM_DIR)/stunnel.pem
-+DESTFILES=$(DESTDIR)$(sbindir)/stunnel $(DESTDIR)$(libdir)/stunnel.so $(DESTDIR)$(man8dir)/stunnel.8  $(DESTDIR)$(PEM_DIR)/stunnel.pem
++DESTFILES=stunnel stunnel.so stunnel.8 stunnel.pem
  
  WINGCC=i386-mingw32msvc-gcc 
- WINCFLAGS=-O2 -Wall -DUSE_WIN32 -DHAVE_OPENSSL -DVERSION=\"@VERSION@\" -I../openssl-0.9.6/outinc
-@@ -56,8 +56,8 @@
+ WINCFLAGS=-O2 -Wall -DUSE_WIN32=1 -DHAVE_OPENSSL=1 -DFD_SETSIZE=4096 -DVERSION=\"@VERSION@\" -I../openssl-0.9.6b/outinc
+@@ -38,6 +38,10 @@
+ all: stunnel stunnel.8 stunnel.html stunnel.so stunnel.pem
+ 
+ install: all installdirs $(DESTFILES)
++	$(INSTALL) stunnel $(DESTDIR)$(sbindir)
++	$(INSTALL) stunnel.so $(DESTDIR)$(libdir)
++	$(INSTALLMAN) stunnel.8 $(DESTDIR)$(man8dir)
++	$(INSTALL) stunnel.pem $(DESTDIR)$(PEM_DIR)
+ 
+ uninstall:
+ 	rm -f $(DESTFILES)
+@@ -63,8 +67,8 @@
  	gpg --yes --armor --detach-sign --force-v3-sigs ../dist/$(VERSION).tar.gz
  
  installdirs: mkinstalldirs
@@ -21,29 +31,3 @@ diff -Nur stunnel-3.20-orig/Makefile.in stunnel-3.20/Makefile.in
  
  # non-standard external rules
  
-@@ -100,17 +100,17 @@
- 		-in stunnel.pem
- 
--$(sbindir)/stunnel: stunnel
--	$(INSTALL) -m 711 stunnel $(sbindir)
-+$(DESTDIR)$(sbindir)/stunnel: stunnel
-+	$(INSTALL) -m 711 stunnel $(DESTDIR)$(sbindir)
- 
--$(libdir)/stunnel.so: stunnel.so
--	test -s stunnel.so && $(INSTALL) -m 755 stunnel.so $(libdir)
-+$(DESTDIR)$(libdir)/stunnel.so: stunnel.so
-+	test -s stunnel.so && $(INSTALL) -m 755 stunnel.so $(DESTDIR)$(libdir)
- 
--$(man8dir)/stunnel.8: stunnel.8
--	$(INSTALL) -m 644 stunnel.8 $(man8dir)
-+$(DESTDIR)$(man8dir)/stunnel.8: stunnel.8
-+	$(INSTALL) -m 644 stunnel.8 $(DESTDIR)$(man8dir)
- 
--$(PEM_DIR)/stunnel.pem: stunnel.pem
-+$(DESTDIR)$(PEM_DIR)/stunnel.pem: stunnel.pem
- 	if [ -n "$(PEM_DIR)" ] ; then \
--		$(INSTALL) -m 600 stunnel.pem $(PEM_DIR); \
-+		$(INSTALL) -m 600 stunnel.pem $(DESTDIR)$(PEM_DIR); \
- 	fi
- 
- ../dist/$(VERSION).exe: stunnel.exe

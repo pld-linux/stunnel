@@ -1,13 +1,11 @@
-diff -Nru stunnel-3.8/configure.in stunnel-3.8.new/configure.in
---- stunnel-3.8/configure.in	Mon Aug 21 19:47:21 2000
-+++ stunnel-3.8.new/configure.in	Mon Aug 21 19:49:04 2000
-@@ -74,7 +74,8 @@
+--- stunnel-3.22/configure.ac~	Mon Jan  7 14:16:03 2002
++++ stunnel-3.22/configure.ac	Mon Jan  7 14:16:03 2002
+@@ -139,7 +139,7 @@
  
  dnl Checks for standard libraries.
  AC_CHECK_LIB(dl, dlopen)
 -AC_CHECK_LIB(nsl, gethostbyname)
-+AC_CHECK_FUNC(gethostbyname, ,
-+	AC_CHECK_LIB(nsl, gethostbyname, LIBS="$LIBS -lnsl",) ) 
++AC_CHECK_FUNC(gethostbyname, [], AC_CHECK_LIB(nsl, gethostbyname))
  AC_CHECK_LIB(socket, socket)
- AC_CHECK_LIB(pthread, pthread_create)
- AC_CHECK_LIB(c_r, pthread_create)
+ 
+ # OSF hack instead of simple AC_CHECK_LIB here
