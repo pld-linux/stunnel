@@ -5,8 +5,6 @@ Version:	3.22
 Release:	2
 License:	GPL
 Group:		Networking/Daemons
-Group(de):	Netzwerkwesen/Server
-Group(pl):	Sieciowe/Serwery
 Source0:	ftp://stunnel.mirt.net/stunnel/OBSOLETE/%{name}-%{version}.tar.gz
 # Source0-md5:	69000d8365b006b3c080a1e2dc9ccba9
 Patch0:		%{name}-DESTDIR.patch
