@@ -1,7 +1,7 @@
 Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzedzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	3.7
+Version:	3.8
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
@@ -30,8 +30,8 @@ lub https.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
+%patch1 -p1 
+%patch2 -p1 
 
 %build
 autoconf
@@ -52,6 +52,9 @@ make install \
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	FAQ HISTORY README BUGS 
 
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -61,5 +64,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc %lang(pl) doc.polish/*
 %doc stunnel.exe
 %attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) %{_libdir}/*
+
 %{_mandir}/man8/*
 %config(noreplace) %verify(not size mtime md5) %attr(600,root,root) %{certdir}/stunnel.pem
