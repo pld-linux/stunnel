@@ -1,3 +1,5 @@
+# TODO:
+# - fix /var/run/stunnel ownership (nobody must NOT own any files!)
 Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
