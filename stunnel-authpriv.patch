@@ -11,14 +11,14 @@
  #endif
      options.session_timeout=300;
      options.cipher_list=NULL;
---- stunnel-3.20/stunnel.8	Tue Aug 28 15:57:49 2001
-+++ stunnel-3.20/stunnel.8	Tue Aug 28 15:58:04 2001
-@@ -226,7 +226,7 @@
+--- stunnel-3.26/stunnel.8.orig	Sat Aug  2 04:46:23 2003
++++ stunnel-3.26/stunnel.8	Mon Sep  8 16:18:07 2003
+@@ -170,7 +170,7 @@
  than it will be shown.  Use \-D debug or \-D 7 for greatest debugging
  output.  The default is notice (5).
  .Sp
--The syslog facility \*(L'daemon\*(R' will be used unless a facility name is
-+The syslog facility \*(L'authpriv\*(R' will be used unless a facility name is
+-The syslog facility 'daemon' will be used unless a facility name is
++The syslog facility 'authpriv' will be used unless a facility name is
  supplied.  (Facilities are not supported on windows.)
  .Sp
  Case is ignored for both facilities and levels.
