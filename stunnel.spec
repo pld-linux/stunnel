@@ -2,17 +2,16 @@ Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzedzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	3.4a
-Release:	1
+Release:	2	
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
 Copyright:	GPL
 Source0:	http://mike.daewoo.com.pl/computer/stunnel/%{name}-%{version}.tar.gz
-Patch0:		stunnel-PLD.patch
 Patch1:		stunnel-DESTDIR.patch
 Patch2:		stunnel-3.4a-fix.patch
 Patch3:		stunnel-dirs.patch
 URL:		http://mike.daewoo.com.pl/computer/stunnel/
-BuildRequires:	openssl-devel >= 0.9.4
+BuildRequires:	openssl-devel >= 0.9.4-2
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %define		certdir		/var/state/openssl/certs
@@ -35,14 +34,13 @@ zrealizowaæ us³ugi pop3s lub https.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p0
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
 %build
 CFLAGS="$RPM_OPT_FLAGS -DHAVE_GETOPT" \
-LDFLAGS="-s -lsslcrypto" ; export LDFLAGS
+LDFLAGS="-s" ; export LDFLAGS
 %configure 
 	
 make
@@ -52,7 +50,7 @@ rm -rf $RPM_BUILD_ROOT
 
 make install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	certdir=%{certdir}
+	certdir=$RPM_BUILD_ROOT/%{certdir}
 	
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	FAQ HISTORY README BUGS 
