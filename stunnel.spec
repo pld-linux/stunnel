@@ -62,8 +62,3 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man8/*
 %attr(600,root,root) %{certsdir}/stunnel.pem
-
-%changelog
-* Thu May 13 1999 Artur Frysiak <wiget@pld.org.pl>
-  [3.2-1]
-- initial release  
