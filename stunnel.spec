@@ -80,7 +80,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc src/stunnel.exe  tools/{ca.*,importCA.*}
 %doc %lang(pl) doc/pl/* doc/stunnel.pl.html
 %dir /etc/stunnel
-%attr(755,root,root) /etc/rc.d/init.d/stunnel
+%attr(754,root,root) /etc/rc.d/init.d/stunnel
 %attr(600,root,root) /etc/sysconfig/stunnel
 %attr(700,nobody,nobody) %{_var}/run/stunnel
 %config(noreplace) %verify(not size mtime md5) /etc/stunnel/*
