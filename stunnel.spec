@@ -62,7 +62,7 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{_mandir}/pl/man8,%{_va
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv -f $RPM_BUILD_ROOT/%{_mandir}/man8/stunnel.pl.8* $RPM_BUILD_ROOT/%{_mandir}/pl/man8/
+mv -f $RPM_BUILD_ROOT%{_mandir}/man8/stunnel.pl.8* $RPM_BUILD_ROOT%{_mandir}/pl/man8
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/stunnel
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/stunnel
