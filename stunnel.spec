@@ -53,7 +53,7 @@ make install \
 	CERTDIR="$RPM_BUILD_ROOT/var/state/ssl/certs"
 	
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
-	FAQ HISTORY README BUGS
+	FAQ HISTORY README BUGS 
 
 %pre
 
@@ -68,7 +68,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {FAQ,HISTORY,README,BUGS}.gz
+%doc {FAQ,HISTORY,README,BUGS}.gz 
+%doc %lang(pl) doc.polish/*
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man8/*
 /var/state/ssl/certs/stunnel.pem
