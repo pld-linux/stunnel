@@ -2,7 +2,7 @@ Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	3.14
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -15,8 +15,8 @@ Patch4:		%{name}-piddir.patch
 Patch5:		%{name}-gen-cert.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
-BuildRequires:	openssl-devel >= 0.9.4-2
-BuildRequires:	openssl-tools >= 0.9.4-2
+BuildRequires:	openssl-devel >= 0.9.6a
+BuildRequires:	openssl-tools >= 0.9.6a
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_certdir	/var/lib/stunnel
