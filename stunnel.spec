@@ -48,7 +48,7 @@ pop3s lub https.
 autoconf
 %configure \
 	--with-pem-dir=%{_certdir}
-	
+
 %{__make}
 
 %install
@@ -57,7 +57,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	certdir=$RPM_BUILD_ROOT/%{_certdir}
-	
+
 gzip -9nf BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt
 
 %clean
