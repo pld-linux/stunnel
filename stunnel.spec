@@ -11,12 +11,14 @@ Source0:	http://www.stunnel.org/download/stunnel/src/%{name}-%{version}.tar.gz
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-fixargs.patch
 Patch3:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
+Patch4:		%{name}-piddir.patch
+Patch5:		%{name}-gen-cert.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	openssl-devel >= 0.9.4-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		certdir		/var/lib/openssl/certs
+%define		_certdir	/var/lib/stunnel
 
 %description
 The stunnel program is designed to work as SSL encryption wrapper
@@ -37,20 +39,23 @@ pop3s lub https.
 %patch1 -p1
 %patch2 -p0
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 autoconf
 CFLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS} -DHAVE_GETOPT"
-%configure
+%configure \
+	--with-pem-dir=%{_certdir}
 	
-%{__make} certdir=%{certdir}
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	certdir=$RPM_BUILD_ROOT/%{certdir}
+	certdir=$RPM_BUILD_ROOT/%{_certdir}
 	
 gzip -9nf FAQ HISTORY README BUGS 
 
@@ -65,8 +70,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc {FAQ,HISTORY,README,BUGS}.gz 
 %doc %lang(pl) doc.polish/*
 %doc stunnel.exe
+%config(noreplace) %verify(not size mtime md5) %attr(600,root,root) %{_certdir}/stunnel.pem
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_libdir}/*
-
+%dir /var/run/stunnel
 %{_mandir}/man8/*
-%config(noreplace) %verify(not size mtime md5) %attr(600,root,root) %{certdir}/stunnel.pem
