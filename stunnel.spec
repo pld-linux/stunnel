@@ -98,9 +98,9 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig/rc-inetd},%{_mandir}/{pl,
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-cp -f $RPM_BUILD_ROOT%{_mandir}/man8/stunnel.fr.8 $RPM_BUILD_ROOT%{_mandir}/fr/man8/stunnel.8
-cp -f $RPM_BUILD_ROOT%{_mandir}/man8/stunnel.pl.8 $RPM_BUILD_ROOT%{_mandir}/pl/man8/stunnel.8
-cp -f $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf-sample $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf
+mv -f $RPM_BUILD_ROOT%{_mandir}/man8/stunnel.fr.8 $RPM_BUILD_ROOT%{_mandir}/fr/man8/stunnel.8
+mv -f $RPM_BUILD_ROOT%{_mandir}/man8/stunnel.pl.8 $RPM_BUILD_ROOT%{_mandir}/pl/man8/stunnel.8
+mv -f $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf-sample $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/stunnel
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/stunnel
@@ -164,14 +164,13 @@ fi
 %files
 %defattr(644,root,root,755)
 # note: this COPYING contains general information not GPL text
-%doc AUTHORS BUGS COPYING CREDITS ChangeLog NEWS PORTS README TODO doc/en/* doc/stunnel.html
-%doc src/stunnel.exe  tools/{ca.*,importCA.*}
+%doc AUTHORS BUGS COPYING CREDITS ChangeLog NEWS PORTS README TODO doc/en/* doc/stunnel.html 
+%doc src/stunnel.exe  tools/{ca.*,importCA.*} tools/stunnel.pem
 %doc %lang(fr) doc/stunnel.fr.html
 %doc %lang(pl) doc/pl/* doc/stunnel.pl.html
 %attr(750,stunnel,stunnel) %{_var}/run/stunnel
 %dir %{_sysconfdir}/stunnel
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/stunnel/stunnel.conf
-%attr(600,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/stunnel/stunnel.pem
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man8/*
 %lang(fr) %{_mandir}/fr/man8/*
