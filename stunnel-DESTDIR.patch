@@ -24,19 +24,23 @@ diff -Nur stunnel-3.20-orig/Makefile.in stunnel-3.20/Makefile.in
 @@ -100,17 +100,17 @@
  		-in stunnel.pem
  
- $(sbindir)/stunnel: stunnel
+-$(sbindir)/stunnel: stunnel
 -	$(INSTALL) -m 711 stunnel $(sbindir)
++$(DESTDIR)$(sbindir)/stunnel: stunnel
 +	$(INSTALL) -m 711 stunnel $(DESTDIR)$(sbindir)
  
- $(libdir)/stunnel.so: stunnel.so
+-$(libdir)/stunnel.so: stunnel.so
 -	test -s stunnel.so && $(INSTALL) -m 755 stunnel.so $(libdir)
++$(DESTDIR)$(libdir)/stunnel.so: stunnel.so
 +	test -s stunnel.so && $(INSTALL) -m 755 stunnel.so $(DESTDIR)$(libdir)
  
- $(man8dir)/stunnel.8: stunnel.8
+-$(man8dir)/stunnel.8: stunnel.8
 -	$(INSTALL) -m 644 stunnel.8 $(man8dir)
++$(DESTDIR)$(man8dir)/stunnel.8: stunnel.8
 +	$(INSTALL) -m 644 stunnel.8 $(DESTDIR)$(man8dir)
  
- $(PEM_DIR)/stunnel.pem: stunnel.pem
+-$(PEM_DIR)/stunnel.pem: stunnel.pem
++$(DESTDIR)$(PEM_DIR)/stunnel.pem: stunnel.pem
  	if [ -n "$(PEM_DIR)" ] ; then \
 -		$(INSTALL) -m 600 stunnel.pem $(PEM_DIR); \
 +		$(INSTALL) -m 600 stunnel.pem $(DESTDIR)$(PEM_DIR); \
