@@ -1,0 +1,11 @@
+--- stunnel-3.9/Makefile.in~	Sun Dec 31 04:37:29 2000
++++ stunnel-3.9/Makefile.in	Sun Dec 31 04:38:07 2000
+@@ -9,7 +9,7 @@
+ sbindir=@sbindir@
+ libdir=@libdir@
+ man8dir=@mandir@/man8
+-piddir=@localstatedir@/stunnel/
++piddir=/var/run/stunnel/
+ ssldir=@ssldir@
+ PEM_DIR=@PEM_DIR@
+ @SET_MAKE@
