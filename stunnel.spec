@@ -15,6 +15,7 @@ Patch4:		%{name}-piddir.patch
 Patch5:		%{name}-gen-cert.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	openssl-devel >= 0.9.6a
 BuildRequires:	openssl-tools >= 0.9.6a
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -44,6 +45,9 @@ pop3s lub https.
 %patch5 -p1
 
 %build
+aclocal
+automake -a -c
+autoheader
 autoconf
 CFLAGS="%{rpmcflags} -DHAVE_GETOPT"
 %configure \
