@@ -9,10 +9,9 @@ Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
 Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
 Patch1:		%{name}-DESTDIR.patch
-Patch2:		%{name}-fixargs.patch
-Patch3:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
-Patch4:		%{name}-piddir.patch
-Patch5:		%{name}-gen-cert.patch
+Patch2:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
+Patch3:		%{name}-piddir.patch
+Patch4:		%{name}-gen-cert.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -39,10 +38,9 @@ pop3s lub https.
 %prep
 %setup -q
 %patch1 -p1
-%patch2 -p0
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 %build
 aclocal
