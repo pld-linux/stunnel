@@ -16,6 +16,7 @@ Patch1:		%{name}-authpriv.patch
 Patch2:		%{name}-ac_fixes.patch
 Patch3:		%{name}-am.patch
 Patch4:		%{name}-getgrnam.patch
+Patch5:		%{name}-libwrap_srv_name_log.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -46,6 +47,7 @@ pop3s lub https.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__libtoolize}
