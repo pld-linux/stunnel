@@ -1,5 +1,5 @@
 Summary:	Universal SSL tunnel
-Summary(pl):	Uniwersalne narzedzie do bezpiecznego tunelowania
+Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	3.9
 Release:	1
