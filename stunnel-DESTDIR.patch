@@ -1,6 +1,6 @@
---- stunnel-3.6/Makefile.in.wiget	Thu Feb  3 10:56:26 2000
-+++ stunnel-3.6/Makefile.in	Thu Feb 10 04:24:57 2000
-@@ -2,13 +2,13 @@
+--- stunnel-3.7/Makefile.in.wiget	Thu Feb 10 12:16:34 2000
++++ stunnel-3.7/Makefile.in	Sat Feb 12 13:21:27 2000
+@@ -2,14 +2,14 @@
  # Makefile for stunnel by Michal Trojnara 1998-2000 #
  #####################################################
  
@@ -8,14 +8,16 @@
 -exec_prefix=@exec_prefix@
 -sbindir=@sbindir@
 -libdir=@libdir@
--mandir=@mandir@/man8
+-man8dir=@mandir@/man8
+-piddir=@localstatedir@/stunnel
 -ssldir=@ssldir@
 -sslcnf=@sslcnf@
 +prefix=$(DESTDIR)@prefix@
 +exec_prefix=$(DESTDIR)@exec_prefix@
 +sbindir=$(DESTDIR)@sbindir@
 +libdir=$(DESTDIR)@libdir@
-+mandir=$(DESTDIR)@mandir@/man8
++man8dir=$(DESTDIR)@mandir@/man8
++piddir=$(DESTDIR)@localstatedir@/stunnel
 +ssldir=$(DESTDIR)@ssldir@
 +sslcnf=$(DESTDIR)@sslcnf@
  certdir=$(sslcnf)/certs

@@ -1,11 +1,11 @@
---- stunnel-3.6/configure.in.wiget	Thu Feb  3 10:41:32 2000
-+++ stunnel-3.6/configure.in	Thu Feb 10 04:32:32 2000
-@@ -14,7 +14,7 @@
- AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
- 
+--- stunnel-3.7/configure.in.wiget	Thu Feb 10 12:16:03 2000
++++ stunnel-3.7/configure.in	Sat Feb 12 13:23:08 2000
+@@ -15,7 +15,7 @@
  AC_MSG_CHECKING([for SSL config directory])
--for dir in /usr/local/openssl /usr/lib/openssl /var/openssl; do
-+for dir in /usr/local/openssl /usr/lib/openssl /var/openssl /var/state/openssl; do
-     sslcnf="$dir"
+ # The next line specifies default
+ sslcnf="/usr/local/stunnel"
+-for dir in /usr/local/openssl /usr/local/ssl /usr/lib/openssl /var/openssl /usr/pkg; do
++for dir in /var/state/openssl /usr/local/openssl /usr/local/ssl /usr/lib/openssl /var/openssl /usr/pkg; do
      if test -d "$dir/certs"; then
+         sslcnf="$dir"
          break
