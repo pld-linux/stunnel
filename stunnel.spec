@@ -2,7 +2,7 @@ Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	3.26
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.stunnel.org/download/stunnel/src/%{name}-%{version}.tar.gz
@@ -16,8 +16,8 @@ Patch5:		%{name}-ac_fixes.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	openssl-devel >= 0.9.6j
-BuildRequires:	openssl-tools >= 0.9.6j
+BuildRequires:	openssl-devel >= 0.9.6k
+BuildRequires:	openssl-tools >= 0.9.6k
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_certdir	/var/lib/stunnel
