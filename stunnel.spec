@@ -2,7 +2,7 @@ Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	4.05
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
@@ -52,7 +52,7 @@ pop3s lub https.
 Summary:	stunnel acts as standalone server 
 Summary(pl):	stunnel dzia³aj±cy jako samodzielny serwer
 Group:		Networking/Daemons
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	%{name}-inetd
 
 %description standalone
@@ -65,7 +65,7 @@ stunnel dzia³aj±cy jako samodzielny serwer.
 Summary:	stunnel acts as inetd service
 Summary(pl):	stunnel dzia³aj±cy jako us³uga inetd
 Group:		Networking/Daemons
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	%{name}-standalone
 
 %description inetd
@@ -170,7 +170,8 @@ fi
 %doc %lang(pl) doc/pl/* doc/stunnel.pl.html
 %attr(750,stunnel,stunnel) %{_var}/run/stunnel
 %dir %{_sysconfdir}/stunnel
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/stunnel/*
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/stunnel/stunnel.conf
+%attr(600,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/stunnel/stunnel.pem
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man8/*
 %lang(fr) %{_mandir}/fr/man8/*
