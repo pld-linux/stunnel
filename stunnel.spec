@@ -52,7 +52,7 @@ make install \
 	DESTDIR="$RPM_BUILD_ROOT/usr" \
 	CERTDIR="$RPM_BUILD_ROOT/var/state/ssl/certs"
 	
-gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man*/* \
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	FAQ HISTORY README BUGS
 
 %pre
@@ -70,7 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc {FAQ,HISTORY,README,BUGS}.gz
 %attr(755,root,root) /usr/sbin/*
-/usr/share/man/man8/*
+%{_mandir}/man8/*
 /var/state/ssl/certs/stunnel.pem
 
 %changelog
