@@ -1,7 +1,7 @@
 Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzedzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	3.2
+Version:	3.4a
 Release:	1
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
