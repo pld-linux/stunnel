@@ -1,8 +1,7 @@
-diff -durN stunnel-3.4a.orig/Makefile.in stunnel-3.4a/Makefile.in
---- stunnel-3.4a.orig/Makefile.in	Mon Jul 12 19:36:10 1999
-+++ stunnel-3.4a/Makefile.in	Sun Sep 12 16:50:14 1999
-@@ -2,12 +2,12 @@
- # Makefile for stunnel by Michal Trojnara 1998-1999 #
+--- stunnel-3.6/Makefile.in.wiget	Thu Feb  3 10:56:26 2000
++++ stunnel-3.6/Makefile.in	Thu Feb 10 04:24:57 2000
+@@ -2,13 +2,13 @@
+ # Makefile for stunnel by Michal Trojnara 1998-2000 #
  #####################################################
  
 -prefix=@prefix@
@@ -11,12 +10,14 @@ diff -durN stunnel-3.4a.orig/Makefile.in stunnel-3.4a/Makefile.in
 -libdir=@libdir@
 -mandir=@mandir@/man8
 -ssldir=@ssldir@
+-sslcnf=@sslcnf@
 +prefix=$(DESTDIR)@prefix@
 +exec_prefix=$(DESTDIR)@exec_prefix@
 +sbindir=$(DESTDIR)@sbindir@
 +libdir=$(DESTDIR)@libdir@
 +mandir=$(DESTDIR)@mandir@/man8
 +ssldir=$(DESTDIR)@ssldir@
- certdir=$(ssldir)/certs
++sslcnf=$(DESTDIR)@sslcnf@
+ certdir=$(sslcnf)/certs
  @SET_MAKE@
  VERSION=stunnel-@VERSION@

@@ -1,33 +1,11 @@
-diff -durN stunnel-3.4a.orig/ssl.c stunnel-3.4a/ssl.c
---- stunnel-3.4a.orig/ssl.c	Mon Sep 13 11:00:20 1999
-+++ stunnel-3.4a/ssl.c	Mon Sep 13 11:02:10 1999
-@@ -52,7 +52,7 @@
- #else /* USE_WIN32 */
+--- stunnel-3.6/configure.in.wiget	Thu Feb  3 10:41:32 2000
++++ stunnel-3.6/configure.in	Thu Feb 10 04:32:32 2000
+@@ -14,7 +14,7 @@
+ AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
  
- /* directory for certificate */
--#define CERT_DIR ssldir "/certs"
-+#define CERT_DIR "/var/state/openssl/certs"
- 
- /* default certificate */
- #define DEFAULT_CERT CERT_DIR "/stunnel.pem"
-@@ -61,7 +61,7 @@
- #define CA_DIR CERT_DIR "/mytrusted"
- 
- /* certificate used for sign our client certs */
--#define CLIENT_CA ssldir "/bin/demoCA/cacert.pem"
-+#define CLIENT_CA "/var/state/openssl/cacert.pem"
- 
- #endif /* USE_WIN32 */
- 
-diff -durN stunnel-3.4a.orig/stunnel.c stunnel-3.4a/stunnel.c
---- stunnel-3.4a.orig/stunnel.c	Tue Jul 13 15:34:28 1999
-+++ stunnel-3.4a/stunnel.c	Mon Sep 13 11:01:38 1999
-@@ -41,7 +41,7 @@
- #else /* USE_WIN32 */
- 
- /* directory for certificate */
--#define CERT_DIR ssldir "/certs"
-+#define CERT_DIR "/var/state/openssl/certs"
- 
- /* default certificate */
- #define DEFAULT_CERT CERT_DIR "/stunnel.pem"
+ AC_MSG_CHECKING([for SSL config directory])
+-for dir in /usr/local/openssl /usr/lib/openssl /var/openssl; do
++for dir in /usr/local/openssl /usr/lib/openssl /var/openssl /var/state/openssl; do
+     sslcnf="$dir"
+     if test -d "$dir/certs"; then
+         break
