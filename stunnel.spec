@@ -19,8 +19,8 @@ Patch6:		%{name}-3.22-sigchld.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	openssl-devel >= 0.9.6a
-BuildRequires:	openssl-tools >= 0.9.6a
+BuildRequires:	openssl-devel >= 0.9.6j
+BuildRequires:	openssl-tools >= 0.9.6j
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_certdir	/var/lib/stunnel
@@ -63,8 +63,6 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	certdir=$RPM_BUILD_ROOT/%{_certdir}
 	
-gzip -9nf BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -73,9 +71,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz doc/english/*.gz doc/english/*.html
+%doc BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt
+%doc doc/english/*.gz doc/english/*.html stunnel.exe
 %doc %lang(pl) doc/polish/*
-%doc stunnel.exe
 %config(noreplace) %verify(not size mtime md5) %attr(600,root,root) %{_certdir}/stunnel.pem
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_libdir}/*
