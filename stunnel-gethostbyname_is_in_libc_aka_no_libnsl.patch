@@ -2,9 +2,9 @@ diff -Nru stunnel-3.8/configure.in stunnel-3.8.new/configure.in
 --- stunnel-3.8/configure.in	Mon Aug 21 19:47:21 2000
 +++ stunnel-3.8.new/configure.in	Mon Aug 21 19:49:04 2000
 @@ -74,7 +74,8 @@
- AC_DEFINE_UNQUOTED(HOST, "$host")
  
  dnl Checks for standard libraries.
+ AC_CHECK_LIB(dl, dlopen)
 -AC_CHECK_LIB(nsl, gethostbyname)
 +AC_CHECK_FUNC(gethostbyname, ,
 +	AC_CHECK_LIB(nsl, gethostbyname, LIBS="$LIBS -lnsl",) ) 

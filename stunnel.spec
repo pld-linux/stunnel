@@ -1,7 +1,7 @@
 Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	3.9
+Version:	3.11
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
