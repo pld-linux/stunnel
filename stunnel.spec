@@ -16,8 +16,8 @@ Patch5:		%{name}-ac_fixes.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	openssl-devel >= 0.9.6k
-BuildRequires:	openssl-tools >= 0.9.6k
+BuildRequires:	openssl-devel >= 0.9.6m
+BuildRequires:	openssl-tools >= 0.9.6m
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_certdir	/var/lib/stunnel
