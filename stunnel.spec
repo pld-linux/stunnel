@@ -2,13 +2,14 @@ Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzedzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	3.8
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
 Source0:	http://mike.daewoo.com.pl/computer/stunnel/%{name}-%{version}.tar.gz
 Patch1:		stunnel-DESTDIR.patch
 Patch2:		stunnel-dirs.patch
+Patch3:		stunnel-fixargs.patch
 URL:		http://mike.daewoo.com.pl/computer/stunnel/
 BuildRequires:	openssl-devel >= 0.9.4-2
 BuildRoot:	/tmp/%{name}-%{version}-root
@@ -32,6 +33,7 @@ lub https.
 %setup -q
 %patch1 -p1 
 %patch2 -p1 
+%patch3 -p0 
 
 %build
 autoconf
@@ -40,7 +42,7 @@ LDFLAGS="-s"
 export CFLAGS LDFLAGS
 %configure 
 	
-make
+make certdir=%{certdir}
 
 %install
 rm -rf $RPM_BUILD_ROOT
