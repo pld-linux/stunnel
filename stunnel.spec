@@ -12,9 +12,9 @@ Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
 Patch3:		%{name}-piddir.patch
 Patch4:		%{name}-gen-cert.patch
+Patch5:		%{name}-conf.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
-BuildRequires:	automake
 BuildRequires:	openssl-devel >= 0.9.6a
 BuildRequires:	openssl-tools >= 0.9.6a
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -41,13 +41,10 @@ pop3s lub https.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
-aclocal
-automake -a -c
-autoheader
 autoconf
-CFLAGS="%{rpmcflags} -DHAVE_GETOPT"
 %configure \
 	--with-pem-dir=%{_certdir}
 	
@@ -60,18 +57,18 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	certdir=$RPM_BUILD_ROOT/%{_certdir}
 	
-gzip -9nf FAQ HISTORY README BUGS 
-
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+gzip -9nf BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post   -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
-%doc {FAQ,HISTORY,README,BUGS}.gz 
-%doc %lang(pl) doc.polish/*
+%doc *.gz doc/english/*.gz doc/english/*.html
+%doc %lang(pl) doc/polish/*
 %doc stunnel.exe
 %config(noreplace) %verify(not size mtime md5) %attr(600,root,root) %{_certdir}/stunnel.pem
 %attr(755,root,root) %{_sbindir}/*
