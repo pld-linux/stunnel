@@ -49,7 +49,7 @@ any changes in the programs' code.
 %description -l pl
 Stunnel umo¿liwia stawianie silnie kodowanych tuneli pomiêdzy serwerem
 a komputerem klienta. Przy jego u¿yciu mo¿na ³atwo zrealizowaæ us³ugi
-pop3s lub https.
+pop3s lub HTTPS.
 
 %package standalone
 Summary:	stunnel acts as standalone server 
