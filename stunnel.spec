@@ -58,8 +58,6 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	certdir=$RPM_BUILD_ROOT/%{_certdir}
 
-gzip -9nf BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -68,7 +66,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz doc/english/*.gz doc/english/*.html
+%doc BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt doc/english/*.html
 %doc %lang(pl) doc/polish/*
 %doc stunnel.exe
 %config(noreplace) %verify(not size mtime md5) %attr(600,root,root) %{_certdir}/stunnel.pem
