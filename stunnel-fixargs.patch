@@ -1,0 +1,16 @@
+--- stunnel.c~	Thu Feb 24 12:32:27 2000
++++ stunnel.c	Sun Mar  5 22:17:16 2000
+@@ -361,6 +361,11 @@
+         default_args[1] = 0;
+         options.execargs = default_args;
+     } else { /* There are some arguments - use execargs[0] as servname */
+-        options.execargs = argv + optind;
+-        safecopy(options.servname, options.execargs[0]);
++        default_args[0] = options.servname;
++	c = 1;
++	while (optind < argc) {
++	    default_args[c++] = argv[optind];
++	    optind++;
++	}
++        options.execargs = default_args;
+     }
