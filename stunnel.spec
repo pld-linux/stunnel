@@ -20,8 +20,8 @@ URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
-#BuildRequires:	openssl-devel >= 0.9.7c
-#BuildRequires:	openssl-tools >= 0.9.7c
+BuildRequires:	openssl-devel >= 0.9.7c
+BuildRequires:	openssl-tools >= 0.9.7c
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
