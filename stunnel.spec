@@ -1,25 +1,22 @@
 Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	3.22
-Release:	1
-License:	GPL
+Version:	4.04
+Release:	0.1
+License:	GPL v2
 Group:		Networking/Daemons
 Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
-Patch0:		%{name}-DESTDIR.patch
-Patch1:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
-Patch2:		%{name}-piddir.patch
-Patch3:		%{name}-gen-cert.patch
-Patch4:		%{name}-authpriv.patch
-Patch5:		%{name}-ac_fixes.patch
+Patch0:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
+Patch1:		%{name}-authpriv.patch
+Patch2:		%{name}-ac_fixes.patch
+Patch3:		%{name}-am.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	libtool
 BuildRequires:	openssl-devel >= 0.9.6a
 BuildRequires:	openssl-tools >= 0.9.6a
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_certdir	/var/lib/stunnel
 
 %description
 The stunnel program is designed to work as SSL encryption wrapper
@@ -41,22 +38,23 @@ pop3s lub https.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
+rm -f missing
+%{__libtoolize}
+%{__aclocal}
 %{__autoconf}
-%configure \
-	--with-pem-dir=%{_certdir}
-
+%{__automake}
+%configure
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	certdir=$RPM_BUILD_ROOT/%{_certdir}
+%{__make} install DESTDIR=$RPM_BUILD_ROOT
+
+mv -f $RPM_BUILD_ROOT/%{_mandir}/man8/stunnel.pl.8* $RPM_BUILD_ROOT/%{_mandir}/pl/man8/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -66,11 +64,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt doc/english/*.html
-%doc %lang(pl) doc/polish/*
-%doc stunnel.exe
-%config(noreplace) %verify(not size mtime md5) %attr(600,root,root) %{_certdir}/stunnel.pem
+%doc AUTHORS BUGS COPYING CREDITS ChangeLog NEWS PORTS README TODO doc/en/* doc/stunnel.html
+%doc src/stunnel.exe
+%doc $RPM_BUILD_ROOT%{_datadir}/doc/stunnel/examples/{c*,i*,stunnel.init}
+%doc %lang(pl) doc/pl/* doc/stunnel.pl.html
+%dir /etc/stunnel
+%config(noreplace) %verify(not size mtime md5) /etc/stunnel/*
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_libdir}/*
-%dir /var/run/stunnel
 %{_mandir}/man8/*
+%lang(pl) %{_mandir}/pl/man8/*
