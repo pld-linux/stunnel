@@ -45,7 +45,7 @@ pop3s lub https.
 %patch5 -p1
 
 %build
-autoconf
+%{__autoconf}
 %configure \
 	--with-pem-dir=%{_certdir}
 
