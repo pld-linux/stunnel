@@ -1,0 +1,30 @@
+--- Makefile.in~	Mon Jul 12 19:36:10 1999
++++ Makefile.in	Wed Jul 21 13:58:56 1999
+@@ -49,7 +49,7 @@
+ 	rm -rf ../dist/$(VERSION)
+ 
+ installdirs: mkinstalldirs
+-	./mkinstalldirs $(sbindir) $(libdir) $(mandir) $(certdir)
++	./mkinstalldirs $(DESTDIR)$(sbindir) $(DESTDIR)$(libdir) $(DESTDIR)$(mandir) $(DESTDIR)$(certdir)
+ 
+ # non-standard external rules
+ 
+@@ -88,14 +88,14 @@
+ 		-in stunnel.pem
+ 
+ $(sbindir)/stunnel: stunnel
+-	$(INSTALL) -m 711 stunnel $(sbindir)
++	$(INSTALL) -m 711 stunnel $(DESTDIR)$(sbindir)
+ 
+ $(libdir)/stunnel.so: stunnel.so
+-	test ! -s stunnel.so || $(INSTALL) -m 755 stunnel.so $(libdir)
++	test ! -s stunnel.so || $(INSTALL) -m 755 stunnel.so $(DESTDIR)$(libdir)
+ 
+ $(mandir)/stunnel.8: stunnel.8
+-	$(INSTALL) -m 644 stunnel.8 $(mandir)
++	$(INSTALL) -m 644 stunnel.8 $(DESTDIR)$(mandir)
+ 
+ $(certdir)/stunnel.pem: stunnel.pem
+-	$(INSTALL) -m 600 stunnel.pem $(certdir)
++	$(INSTALL) -m 600 stunnel.pem $(DESTDIR)$(certdir)
+ 
