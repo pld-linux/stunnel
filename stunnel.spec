@@ -21,17 +21,20 @@ URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
+BuildRequires:	libwrap-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	openssl-tools >= 0.9.7d
-BuildRequires:	libwrap-devel
+BuildRequires:	rpmbuild(macros) >= 1.159
 PreReq:		rc-scripts
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
-Requires(postun):	/usr/sbin/userdel
 Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
 Requires(post,preun):	/sbin/chkconfig
+Provides:	group(stunnel)
+Provides:	user(stunnel)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -110,27 +113,28 @@ install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/stunnel
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`getgid stunnel`" ]; then
-	if [ "`getgid stunnel`" != "130" ]; then
+if [ -n "`/usr/bin/getgid stunnel`" ]; then
+	if [ "`/usr/bin/getgid stunnel`" != "130" ]; then
 		echo "Error: group stunnel doesn't have gid=130. Correct this before installing stunnel." 1>&2
 		exit 1
 	fi
 else
-	/usr/sbin/groupadd -g 130 -r -f stunnel
+	/usr/sbin/groupadd -g 130 stunnel 1>&2
 fi
-if [ -n "`id -u stunnel 2>/dev/null`" ]; then
-	if [ "`id -u stunnel`" != "130" ]; then
+if [ -n "`/bin/id -u stunnel 2>/dev/null`" ]; then
+	if [ "`/bin/id -u stunnel`" != "130" ]; then
 		echo "Error: user stunnel doesn't have uid=130. Correct this before installing stunnel." 1>&2
 		exit 1
 	fi
 else
-	/usr/sbin/useradd -u 130 -r -d /var/run/stunnel -s /bin/false -c "stunnel User" -g stunnel stunnel 1>&2
+	/usr/sbin/useradd -u 130 -d /var/run/stunnel -s /bin/false \
+		-c "stunnel User" -g stunnel stunnel 1>&2
 fi
 
 %postun 
 if [ "$1" = "0" ]; then
-	/usr/sbin/userdel stunnel
-	/usr/sbin/groupdel stunnel
+	%userremove stunnel
+	%groupremove stunnel
 fi
 
 %post standalone
