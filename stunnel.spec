@@ -2,7 +2,7 @@ Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzedzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	3.8
-Release:	3
+Release:	4
 License:	GPL
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
@@ -17,17 +17,18 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		certdir		/var/lib/openssl/certs
 
 %description
-The stunnel program is designed to work as SSL encryption wrapper between
-remote client and local (inetd-startable) or remote server. The concept is
-that having non-SSL aware daemons running on your system you can easily
-setup them to communicate with clients over secure SSL channel. stunnel can
-be used to add SSL functionality to commonly used inetd daemons like POP-2,
-POP-3 and IMAP servers without any changes in the programs' code.
+The stunnel program is designed to work as SSL encryption wrapper
+between remote client and local (inetd-startable) or remote server.
+The concept is that having non-SSL aware daemons running on your
+system you can easily setup them to communicate with clients over
+secure SSL channel. stunnel can be used to add SSL functionality to
+commonly used inetd daemons like POP-2, POP-3 and IMAP servers without
+any changes in the programs' code.
 
 %description -l pl
-Stunnel umo¿liwia stawianie silnie kodowanych tuneli pomiêdzy serwerem a
-komputerem klienta. Przy jego u¿yciu mo¿na ³atwo zrealizowaæ us³ugi pop3s
-lub https.
+Stunnel umo¿liwia stawianie silnie kodowanych tuneli pomiêdzy serwerem
+a komputerem klienta. Przy jego u¿yciu mo¿na ³atwo zrealizowaæ us³ugi
+pop3s lub https.
 
 %prep
 %setup -q
