@@ -69,8 +69,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt
-%doc doc/english/*.gz doc/english/*.html stunnel.exe
+%doc BUGS CREDITS FAQ HISTORY README TODO doc/english/transproxy.txt doc/english/*.html stunnel.exe
 %doc %lang(pl) doc/polish/*
 %config(noreplace) %verify(not size mtime md5) %attr(600,root,root) %{_certdir}/stunnel.pem
 %attr(755,root,root) %{_sbindir}/*
