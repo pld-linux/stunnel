@@ -5,8 +5,6 @@ Version:	3.22
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
-Group(de):	Netzwerkwesen/Server
-Group(pl):	Sieciowe/Serwery
 Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
 Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
