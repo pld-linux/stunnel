@@ -7,7 +7,8 @@ License:	GPL
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
-Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
+Source0:	ftp://stunnel.mirt.net/stunnel/OBSOLETE/%{name}-%{version}.tar.gz
+# Source0-md5:	69000d8365b006b3c080a1e2dc9ccba9
 Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
 Patch2:		%{name}-piddir.patch
