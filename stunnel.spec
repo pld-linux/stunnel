@@ -24,7 +24,7 @@ BuildRequires:	libtool
 BuildRequires:	libwrap-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	openssl-tools >= 0.9.7d
-BuildRequires:	rpmbuild(macros) >= 1.164
+BuildRequires:	rpmbuild(macros) >= 1.202
 PreReq:		rc-scripts
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getgid
@@ -113,23 +113,8 @@ install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/stunnel
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`/usr/bin/getgid stunnel`" ]; then
-	if [ "`/usr/bin/getgid stunnel`" != "130" ]; then
-		echo "Error: group stunnel doesn't have gid=130. Correct this before installing stunnel." 1>&2
-		exit 1
-	fi
-else
-	/usr/sbin/groupadd -g 130 stunnel 1>&2
-fi
-if [ -n "`/bin/id -u stunnel 2>/dev/null`" ]; then
-	if [ "`/bin/id -u stunnel`" != "130" ]; then
-		echo "Error: user stunnel doesn't have uid=130. Correct this before installing stunnel." 1>&2
-		exit 1
-	fi
-else
-	/usr/sbin/useradd -u 130 -d /var/run/stunnel -s /bin/false \
-		-c "stunnel User" -g stunnel stunnel 1>&2
-fi
+%groupadd -g 130 stunnel
+%useradd -u 130 -d /var/run/stunnel -s /bin/false -c "stunnel User" -g stunnel stunnel
 
 %postun 
 if [ "$1" = "0" ]; then
