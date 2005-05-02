@@ -52,7 +52,7 @@ a komputerem klienta. Przy jego u¿yciu mo¿na ³atwo zrealizowaæ us³ugi
 pop3s lub HTTPS.
 
 %package standalone
-Summary:	stunnel acts as standalone server 
+Summary:	stunnel acts as standalone server
 Summary(pl):	stunnel dzia³aj±cy jako samodzielny serwer
 Group:		Networking/Daemons
 Requires:	%{name} = %{epoch}:%{version}-%{release}
@@ -64,7 +64,7 @@ stunnel acts as standalone server.
 %description standalone -l pl
 stunnel dzia³aj±cy jako samodzielny serwer.
 
-%package inetd 
+%package inetd
 Summary:	stunnel acts as inetd service
 Summary(pl):	stunnel dzia³aj±cy jako us³uga inetd
 Group:		Networking/Daemons
@@ -116,7 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 %groupadd -g 130 stunnel
 %useradd -u 130 -d /var/run/stunnel -s /bin/false -c "stunnel User" -g stunnel stunnel
 
-%postun 
+%postun
 if [ "$1" = "0" ]; then
 	%userremove stunnel
 	%groupremove stunnel
@@ -153,7 +153,7 @@ fi
 %files
 %defattr(644,root,root,755)
 # note: this COPYING contains general information not GPL text
-%doc AUTHORS BUGS COPYING CREDITS ChangeLog NEWS PORTS README TODO doc/en/* doc/stunnel.html 
+%doc AUTHORS BUGS COPYING CREDITS ChangeLog NEWS PORTS README TODO doc/en/* doc/stunnel.html
 %doc src/stunnel.exe tools/{ca.*,importCA.*} tools/stunnel.pem
 %doc %lang(fr) doc/stunnel.fr.html
 %doc %lang(pl) doc/pl/* doc/stunnel.pl.html
