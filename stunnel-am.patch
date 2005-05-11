@@ -1,23 +1,11 @@
-diff -burN stunnel-4.06.orig/tools/Makefile.am stunnel-4.06/tools/Makefile.am
---- stunnel-4.06.orig/tools/Makefile.am	2004-12-26 18:33:15.119066912 +0100
-+++ stunnel-4.06/tools/Makefile.am	2004-12-26 19:34:37.002335576 +0100
-@@ -13,8 +13,8 @@
- 	stunnel.spec stunnel.init
- 
- install-data-local:
--	mkdir -p $(localstatedir)/stunnel
--	-chmod a=rwx,+t $(localstatedir)/stunnel
-+	mkdir -p $(DESTDIR)$(localstatedir)/stunnel
-+	-chmod a=rwx,+t $(DESTDIR)$(localstatedir)/stunnel
- 	-uname | grep SunOS && \
- 		mkdir -p $(localstatedir)/stunnel/dev && \
- 		chmod u=rwx,go=rx $(localstatedir)/stunnel/dev && \
-@@ -27,7 +27,7 @@
- 		then dd if="$(RANDOM_FILE)" of=stunnel.rnd bs=256 count=1; \
- 			RND="-rand stunnel.rnd"; \
- 		else RND=""; fi; \
--	$(openssl) req -new -x509 -days 365 -nodes $$RND \
-+	echo -e "\n\n\n\n\n\n" | $(openssl) req -new -x509 -days 365 -nodes $$RND \
- 		-config $(srcdir)/stunnel.cnf -out stunnel.pem -keyout stunnel.pem; \
- 	test $(USE_DH) -eq 0 || $(openssl) gendh $$RND 512 >> stunnel.pem
- 	$(openssl) x509 -subject -dates -fingerprint -noout \
+--- stunnel-4.10/tools/Makefile.am.orig	2005-03-26 21:38:01.000000000 +0100
++++ stunnel-4.10/tools/Makefile.am	2005-05-11 13:30:00.000000000 +0200
+@@ -20,7 +20,7 @@
+ 		else \
+ 			RND=""; \
+ 		fi; \
+-		$(openssl) req -new -x509 -days 365 -nodes $$RND \
++		echo -e "\n\n\n\n\n\n" | $(openssl) req -new -x509 -days 365 -nodes $$RND \
+ 			-config $(srcdir)/stunnel.cnf \
+ 			-out stunnel.pem -keyout stunnel.pem; \
+ 		test $(USE_DH) -eq 0 || $(openssl) gendh $$RND 512 >> stunnel.pem; \
