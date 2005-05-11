@@ -1,12 +1,12 @@
 Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	4.07
+Version:	4.10
 Release:	0.1
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
-# Source0-md5:	7d53af550a1c2e01e146b936e58b8860
+# Source0-md5:	9de7a62a44083114779ca4e109d70776
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet
@@ -25,14 +25,13 @@ BuildRequires:	libwrap-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	openssl-tools >= 0.9.7d
 BuildRequires:	rpmbuild(macros) >= 1.202
-PreReq:		rc-scripts
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
-Requires(post,preun):	/sbin/chkconfig
+Requires(postun):	/sbin/ldconfig
 Provides:	group(stunnel)
 Provides:	user(stunnel)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -55,6 +54,8 @@ pop3s lub HTTPS.
 Summary:	stunnel acts as standalone server
 Summary(pl):	stunnel dzia³aj±cy jako samodzielny serwer
 Group:		Networking/Daemons
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	%{name}-inetd
 
@@ -68,6 +69,7 @@ stunnel dzia³aj±cy jako samodzielny serwer.
 Summary:	stunnel acts as inetd service
 Summary(pl):	stunnel dzia³aj±cy jako us³uga inetd
 Group:		Networking/Daemons
+PreReq:		rc-inetd
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	%{name}-standalone
 
@@ -109,6 +111,8 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/stunnel
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/stunnel
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/stunnel
 
+rm -f $RPM_BUILD_ROOT%{_libdir}/libstunnel.la
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -116,7 +120,10 @@ rm -rf $RPM_BUILD_ROOT
 %groupadd -g 130 stunnel
 %useradd -u 130 -d /var/run/stunnel -s /bin/false -c "stunnel User" -g stunnel stunnel
 
+%post	-p /sbin/ldconfig
+
 %postun
+/sbin/ldconfig
 if [ "$1" = "0" ]; then
 	%userremove stunnel
 	%groupremove stunnel
@@ -154,13 +161,14 @@ fi
 %defattr(644,root,root,755)
 # note: this COPYING contains general information not GPL text
 %doc AUTHORS BUGS COPYING CREDITS ChangeLog NEWS PORTS README TODO doc/en/* doc/stunnel.html
-%doc src/stunnel.exe tools/{ca.*,importCA.*} tools/stunnel.pem
+%doc src/stunnel.exe tools/{ca.*,importCA.*}
 %doc %lang(fr) doc/stunnel.fr.html
 %doc %lang(pl) doc/pl/* doc/stunnel.pl.html
 %attr(750,stunnel,stunnel) %{_var}/run/stunnel
 %dir %{_sysconfdir}/stunnel
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/stunnel/stunnel.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/stunnel/stunnel.conf
 %attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) %{_libdir}/libstunnel.so
 %{_mandir}/man8/*
 %lang(fr) %{_mandir}/fr/man8/*
 %lang(pl) %{_mandir}/pl/man8/*
@@ -168,8 +176,8 @@ fi
 %files standalone
 %defattr(644,root,root,755)
 %attr(754,root,root) /etc/rc.d/init.d/stunnel
-%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/stunnel
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/stunnel
 
 %files inetd
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rc-inetd/stunnel
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rc-inetd/stunnel
