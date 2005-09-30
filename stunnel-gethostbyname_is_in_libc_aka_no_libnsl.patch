@@ -1,11 +1,12 @@
---- stunnel-4.04/configure.ac.orig	Sun Jan 12 18:23:14 2003
-+++ stunnel-4.04/configure.ac	Sun Jan 12 18:23:25 2003
-@@ -107,7 +107,7 @@
- dnl Checks for standard libraries.
- AC_CHECK_LIB(dl, dlopen)
- AC_CHECK_LIB(dld, shl_load)
+diff -ur stunnel-4.12/configure.ac stunnel-4.12.new/configure.ac
+--- stunnel-4.12/configure.ac	2005-09-29 19:56:55.000000000 +0000
++++ stunnel-4.12.new/configure.ac	2005-09-30 07:20:00.968968264 +0000
+@@ -42,7 +42,7 @@
+ # Checks for standard libraries
+ #AC_CHECK_LIB(dl, dlopen)
+ #AC_CHECK_LIB(dld, shl_load)
 -AC_CHECK_LIB(nsl, gethostbyname)
 +AC_CHECK_FUNC(gethostbyname, [], AC_CHECK_LIB(nsl, gethostbyname))
  AC_CHECK_LIB(socket, socket)
- 
- # OSF hack instead of simple AC_CHECK_LIB here
+ AC_CHECK_LIB(util, openpty)
+ AC_CHECK_LIB(z, inflateEnd)
