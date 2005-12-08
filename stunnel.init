@@ -2,7 +2,7 @@
 #
 # stunnel	stunnel (Universal SSL tunnel)
 #
-# chkconfig:	345 14 91	
+# chkconfig:	345 14 91
 #
 # description:	stunnel (Universal SSL tunnel)
 #
@@ -55,7 +55,7 @@ case "$1" in
 		rm -f /var/run/stunnel/stunnel.pid /var/lock/subsys/stunnel >/dev/null 2>&1
 	else
 		msg_not_running stunnel
-	fi	
+	fi
 	;;
   restart|force-reload)
 	$0 stop
