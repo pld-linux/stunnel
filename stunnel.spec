@@ -1,12 +1,12 @@
 Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	4.12
+Version:	4.14
 Release:	0.1
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
-# Source0-md5:	0eaef6573d5fb96021d5a003fc0c7d91
+# Source0-md5:	0969cc4868dfd75f22792ecccc9ec555
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet
@@ -81,12 +81,12 @@ stunnel dzia³aj±cy jako us³uga inetd.
 
 %prep
 %setup -q
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
+#%patch5 -p1
 %patch6 -p1
 
 %build
