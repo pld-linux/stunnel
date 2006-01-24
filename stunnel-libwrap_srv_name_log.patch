@@ -1,14 +1,13 @@
-diff -burN stunnel-4.06.orig/src/client.c stunnel-4.06/src/client.c
---- stunnel-4.06.orig/src/client.c	2004-12-26 18:33:15.114067672 +0100
-+++ stunnel-4.06/src/client.c	2004-12-26 19:11:56.030234784 +0100
-@@ -705,8 +705,8 @@
-     leave_critical_section(CRIT_INET);
+--- stunnel-4.14/src/client.c.orig	2005-10-24 20:00:56.000000000 +0200
++++ stunnel-4.14/src/client.c	2006-01-24 13:31:39.000000000 +0100
+@@ -735,8 +735,8 @@
+     }
  
-     if (!result) {
+     if(!result) {
 -        s_log(LOG_WARNING, "Connection from %s REFUSED by libwrap",
 -            c->accepting_address);
 +        s_log(LOG_WARNING, "Connection to service %s from %s REFUSED by libwrap",
 +            c->opt->servname, c->accepting_address);
-         s_log(LOG_DEBUG, "See hosts_access(5) for details");
+         s_log(LOG_DEBUG, "See hosts_access(5) manual for details");
          return -1; /* FAILED */
      }

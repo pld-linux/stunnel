@@ -1,12 +1,15 @@
-diff -ur stunnel-4.12/configure.ac stunnel-4.12.new/configure.ac
---- stunnel-4.12/configure.ac	2005-09-29 19:56:55.000000000 +0000
-+++ stunnel-4.12.new/configure.ac	2005-09-30 07:20:00.968968264 +0000
-@@ -42,7 +42,7 @@
+--- stunnel-4.14/configure.ac.orig	2006-01-24 13:27:15.000000000 +0100
++++ stunnel-4.14/configure.ac	2006-01-24 13:28:56.000000000 +0100
+@@ -41,9 +41,9 @@
+ 
+ AC_MSG_NOTICE([**************************************** libraries])
  # Checks for standard libraries
- #AC_CHECK_LIB(dl, dlopen)
- #AC_CHECK_LIB(dld, shl_load)
 -AC_CHECK_LIB(nsl, gethostbyname)
-+AC_CHECK_FUNC(gethostbyname, [], AC_CHECK_LIB(nsl, gethostbyname))
- AC_CHECK_LIB(socket, socket)
- AC_CHECK_LIB(util, openpty)
- AC_CHECK_LIB(z, inflateEnd)
+-AC_CHECK_LIB(socket, socket)
+-AC_CHECK_LIB(util, openpty)
++AC_SEARCH_LIBS(gethostbyname, nsl)
++AC_SEARCH_LIBS(socket, socket)
++AC_SEARCH_LIBS(openpty, util)
+ # Checks for dynamic loader and zlib needed by OpenSSL
+ AC_CHECK_LIB(dl, dlopen)
+ AC_CHECK_LIB(dld, shl_load)
