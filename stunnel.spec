@@ -56,7 +56,7 @@ Summary(pl):	stunnel dzia³aj±cy jako samodzielny serwer
 Group:		Networking/Daemons
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 Obsoletes:	%{name}-inetd
 
 %description standalone
@@ -70,7 +70,7 @@ Summary:	stunnel acts as inetd service
 Summary(pl):	stunnel dzia³aj±cy jako us³uga inetd
 Group:		Networking/Daemons
 PreReq:		rc-inetd
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 Obsoletes:	%{name}-standalone
 
 %description inetd
