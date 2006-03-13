@@ -24,14 +24,14 @@ BuildRequires:	libtool
 BuildRequires:	libwrap-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	openssl-tools >= 0.9.7d
-BuildRequires:	rpmbuild(macros) >= 1.202
+BuildRequires:	rpmbuild(macros) >= 1.268
+Requires(postun):	/sbin/ldconfig
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
-Requires(postun):	/usr/sbin/groupdel
-Requires(postun):	/usr/sbin/userdel
-Requires(postun):	/sbin/ldconfig
 Provides:	group(stunnel)
 Provides:	user(stunnel)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -54,10 +54,10 @@ pop3s lub HTTPS.
 Summary:	stunnel acts as standalone server
 Summary(pl):	stunnel dzia³aj±cy jako samodzielny serwer
 Group:		Networking/Daemons
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name} = %{version}-%{release}
-Obsoletes:	%{name}-inetd
+Requires:	rc-scripts
+Obsoletes:	stunnel-inetd
 
 %description standalone
 stunnel acts as standalone server.
@@ -69,9 +69,9 @@ stunnel dzia³aj±cy jako samodzielny serwer.
 Summary:	stunnel acts as inetd service
 Summary(pl):	stunnel dzia³aj±cy jako us³uga inetd
 Group:		Networking/Daemons
-PreReq:		rc-inetd
 Requires:	%{name} = %{version}-%{release}
-Obsoletes:	%{name}-standalone
+Requires:	rc-inetd
+Obsoletes:	stunnel-standalone
 
 %description inetd
 stunnel acts as inetd service.
@@ -131,30 +131,20 @@ fi
 
 %post standalone
 /sbin/chkconfig --add stunnel
-if [ -f /var/lock/subsys/stunnel ]; then
-	/etc/rc.d/init.d/stunnel restart 1>&2
-else
-	echo "Run \"/etc/rc.d/init.d/stunnel start\" to start stunnel daemon."
-fi
+%service stunnel restart "stunnel daemon"
 
 %preun standalone
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/stunnel ]; then
-		/etc/rc.d/init.d/stunnel stop 1>&2
-	fi
+	%service stunnel stop
 	/sbin/chkconfig --del stunnel
 fi
 
 %post inetd
-if [ -f /var/lock/subsys/rc-inetd ]; then
-	/etc/rc.d/init.d/rc-inetd restart 1>&2
-else
-	echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inet server" 1>&2
-fi
+%service -q rc-inetd reload
 
 %postun inetd
-if [ "$1" = "0" -a -f /var/lock/subsys/rc-inetd ]; then
-	/etc/rc.d/init.d/rc-inetd reload 1>&2
+if [ "$1" = "0" ]; then
+	%service -q rc-inetd reload
 fi
 
 %files
