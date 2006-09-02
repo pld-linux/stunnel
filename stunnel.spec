@@ -1,12 +1,12 @@
 Summary:	Universal SSL tunnel
 Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	4.15
+Version:	4.16
 Release:	1
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
-# Source0-md5:	2c00153ad099a5f9c5609e8d1dbbe470
+# Source0-md5:	8ea5cae3eeaacc0271b766506b4b9d4a
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet
@@ -14,9 +14,8 @@ Patch0:		%{name}-gethostbyname_is_in_libc_aka_no_libnsl.patch
 Patch1:		%{name}-authpriv.patch
 Patch2:		%{name}-ac_fixes.patch
 Patch3:		%{name}-am.patch
-Patch4:		%{name}-Makefile.patch
-Patch5:		%{name}-libwrap_srv_name_log.patch
-Patch6:		%{name}-config.patch
+Patch4:		%{name}-libwrap_srv_name_log.patch
+Patch5:		%{name}-config.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -85,9 +84,8 @@ stunnel dzia³aj±cy jako us³uga inetd.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p0
+%patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 %build
 %{__aclocal}
