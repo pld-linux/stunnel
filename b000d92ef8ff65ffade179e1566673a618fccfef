@@ -1,0 +1,4 @@
+- conf patch: fix for libwrap checking in configure(.in)
+- removed calling automake - this package doesn't have automake support
+- fixed DESTDIR patch
+- updated %doc
