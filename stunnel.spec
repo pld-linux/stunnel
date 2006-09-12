@@ -110,6 +110,8 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/stunnel
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/stunnel
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/libstunnel.la
+rm -f $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.pem
+rm -rf $RPM_BUILD_ROOT%{_docdir}/stunnel
 
 %clean
 rm -rf $RPM_BUILD_ROOT
