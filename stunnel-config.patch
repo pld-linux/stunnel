@@ -1,0 +1,71 @@
+--- stunnel-4.16/tools/stunnel.conf-sample.in.orig	2006-08-31 19:02:30.000000000 +0000
++++ stunnel-4.16/tools/stunnel.conf-sample.in	2006-09-02 12:08:51.776623500 +0000
+@@ -3,18 +3,18 @@
+ ; Please make sure you understand them (especially the effect of chroot jail)
+ 
+ ; Certificate/key is needed in server mode and optional in client mode
+-cert = @prefix@/etc/stunnel/mail.pem
+-;key = @prefix@/etc/stunnel/mail.pem
++cert = /etc/stunnel/mail.pem
++;key = /etc/stunnel/mail.pem
+ 
+ ; Protocol version (all, SSLv2, SSLv3, TLSv1)
+ sslVersion = SSLv3
+ 
+ ; Some security enhancements for UNIX systems - comment them out on Win32
+-chroot = @prefix@/var/lib/stunnel/
+-setuid = nobody
+-setgid = @DEFAULT_GROUP@
++;chroot = /var/lib/stunnel/
++setuid = stunnel
++setgid = stunnel
+ ; PID is created inside chroot jail
+-pid = /stunnel.pid
++pid = /var/run/stunnel/stunnel.pid
+ 
+ ; Some performance tunings
+ socket = l:TCP_NODELAY=1
+@@ -30,12 +30,12 @@
+ ; CApath is located inside chroot jail
+ ;CApath = /certs
+ ; It's often easier to use CAfile
+-;CAfile = @prefix@/etc/stunnel/certs.pem
++;CAfile = /etc/stunnel/certs.pem
+ ; Don't forget to c_rehash CRLpath
+ ; CRLpath is located inside chroot jail
+ ;CRLpath = /crls
+ ; Alternatively you can use CRLfile
+-;CRLfile = @prefix@/etc/stunnel/crls.pem
++;CRLfile = /etc/stunnel/crls.pem
+ 
+ ; Some debugging stuff useful for troubleshooting
+ ;debug = 7
+@@ -46,17 +46,17 @@
+ 
+ ; Service-level configuration
+ 
+-[pop3s]
+-accept  = 995
+-connect = 110
+-
+-[imaps]
+-accept  = 993
+-connect = 143
+-
+-[ssmtp]
+-accept  = 465
+-connect = 25
++;[pop3s]
++;accept  = 995
++;connect = 110
++
++;[imaps]
++;accept  = 993
++;connect = 143
++
++;[ssmtp]
++;accept  = 465
++;connect = 25
+ 
+ ;[https]
+ ;accept  = 443
