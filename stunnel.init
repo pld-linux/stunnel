@@ -34,10 +34,7 @@ if [ ! -f "$STUNNEL_CONFIG" ]; then
 	exit 1
 fi
 
-RETVAL=0
-# See how we were called.
-case "$1" in
-  start)
+start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/stunnel ]; then
 		msg_starting stunnel; busy
@@ -47,8 +44,9 @@ case "$1" in
 	else
 		msg_already_running stunnel
 	fi
-	;;
-  stop)
+}
+
+stop() {
 	if [ -f /var/lock/subsys/stunnel ]; then
 		msg_stopping stunnel
 		killproc stunnel
@@ -56,11 +54,20 @@ case "$1" in
 	else
 		msg_not_running stunnel
 	fi
+}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
 	;;
   restart|force-reload)
-	$0 stop
-	$0 start
-	exit $?
+	stop
+	start
 	;;
   status)
 	status stunnel
