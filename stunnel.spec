@@ -1,5 +1,5 @@
 Summary:	Universal SSL tunnel
-Summary(pl.UTF-8):   Uniwersalne narzędzie do bezpiecznego tunelowania
+Summary(pl.UTF-8):	Uniwersalne narzędzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	4.20
 Release:	1
@@ -51,7 +51,7 @@ pop3s lub HTTPS.
 
 %package standalone
 Summary:	stunnel acts as standalone server
-Summary(pl.UTF-8):   stunnel działający jako samodzielny serwer
+Summary(pl.UTF-8):	stunnel działający jako samodzielny serwer
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name} = %{version}-%{release}
@@ -66,7 +66,7 @@ stunnel działający jako samodzielny serwer.
 
 %package inetd
 Summary:	stunnel acts as inetd service
-Summary(pl.UTF-8):   stunnel działający jako usługa inetd
+Summary(pl.UTF-8):	stunnel działający jako usługa inetd
 Group:		Networking/Daemons
 Requires:	%{name} = %{version}-%{release}
 Requires:	rc-inetd
