@@ -1,5 +1,5 @@
 Summary:	Universal SSL tunnel
-Summary(pl):	Uniwersalne narzêdzie do bezpiecznego tunelowania
+Summary(pl.UTF-8):   Uniwersalne narzÄ™dzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	4.20
 Release:	1
@@ -44,14 +44,14 @@ secure SSL channel. stunnel can be used to add SSL functionality to
 commonly used inetd daemons like POP-2, POP-3 and IMAP servers without
 any changes in the programs' code.
 
-%description -l pl
-Stunnel umo¿liwia stawianie silnie kodowanych tuneli pomiêdzy serwerem
-a komputerem klienta. Przy jego u¿yciu mo¿na ³atwo zrealizowaæ us³ugi
+%description -l pl.UTF-8
+Stunnel umoÅ¼liwia stawianie silnie kodowanych tuneli pomiÄ™dzy serwerem
+a komputerem klienta. Przy jego uÅ¼yciu moÅ¼na Å‚atwo zrealizowaÄ‡ usÅ‚ugi
 pop3s lub HTTPS.
 
 %package standalone
 Summary:	stunnel acts as standalone server
-Summary(pl):	stunnel dzia³aj±cy jako samodzielny serwer
+Summary(pl.UTF-8):   stunnel dziaÅ‚ajÄ…cy jako samodzielny serwer
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name} = %{version}-%{release}
@@ -61,12 +61,12 @@ Obsoletes:	stunnel-inetd
 %description standalone
 stunnel acts as standalone server.
 
-%description standalone -l pl
-stunnel dzia³aj±cy jako samodzielny serwer.
+%description standalone -l pl.UTF-8
+stunnel dziaÅ‚ajÄ…cy jako samodzielny serwer.
 
 %package inetd
 Summary:	stunnel acts as inetd service
-Summary(pl):	stunnel dzia³aj±cy jako us³uga inetd
+Summary(pl.UTF-8):   stunnel dziaÅ‚ajÄ…cy jako usÅ‚uga inetd
 Group:		Networking/Daemons
 Requires:	%{name} = %{version}-%{release}
 Requires:	rc-inetd
@@ -75,8 +75,8 @@ Obsoletes:	stunnel-standalone
 %description inetd
 stunnel acts as inetd service.
 
-%description inetd -l pl
-stunnel dzia³aj±cy jako us³uga inetd.
+%description inetd -l pl.UTF-8
+stunnel dziaÅ‚ajÄ…cy jako usÅ‚uga inetd.
 
 %prep
 %setup -q
