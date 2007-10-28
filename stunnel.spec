@@ -1,12 +1,12 @@
 Summary:	Universal SSL tunnel
 Summary(pl.UTF-8):	Uniwersalne narzędzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	4.20
+Version:	4.21
 Release:	1
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
-# Source0-md5:	cf9940395d3503018f721c962528d2ec
+# Source0-md5:	1eaec5228979beca4d548f453304e311
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet
@@ -109,7 +109,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/stunnel
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/stunnel
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/stunnel
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/libstunnel.la
+rm -rf $RPM_BUILD_ROOT%{_libdir}/stunnel
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.pem
 rm -rf $RPM_BUILD_ROOT%{_docdir}/stunnel
 
@@ -157,8 +157,7 @@ fi
 %attr(750,stunnel,stunnel) %{_var}/run/stunnel
 %dir %{_sysconfdir}/stunnel
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/stunnel/stunnel.conf
-%attr(755,root,root) %{_sbindir}/*
-%attr(755,root,root) %{_libdir}/libstunnel.so
+%attr(755,root,root) %{_bindir}/*
 %{_mandir}/man8/*
 %lang(fr) %{_mandir}/fr/man8/*
 %lang(pl) %{_mandir}/pl/man8/*

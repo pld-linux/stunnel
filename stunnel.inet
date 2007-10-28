@@ -5,5 +5,5 @@ PORT=6666
 FLAGS=nowait
 USER=root
 SERVER=tcpd
-DAEMON=/usr/sbin/stunnel
+DAEMON=/usr/bin/stunnel
 DAEMONARGS="/etc/stunnel/stunnel.conf"

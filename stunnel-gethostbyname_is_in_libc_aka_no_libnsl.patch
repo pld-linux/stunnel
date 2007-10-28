@@ -1,9 +1,9 @@
---- stunnel-4.16/configure.ac.orig	2006-08-19 20:28:14.000000000 +0000
-+++ stunnel-4.16/configure.ac	2006-09-02 12:00:10.916071750 +0000
-@@ -91,8 +91,8 @@
- AC_MSG_NOTICE([**************************************** libraries])
+--- stunnel-4.21/configure.ac.orig   2007-08-08 22:43:10.000000000 +0000
++++ stunnel-4.21/configure.ac        2007-10-28 11:44:32.424648485 +0000
+@@ -92,8 +92,8 @@
  # Checks for standard libraries
  AC_SEARCH_LIBS(gethostbyname, nsl)
+ AC_SEARCH_LIBS(yp_get_default_domain, nsl)
 -AC_CHECK_LIB(socket, socket)
 -AC_CHECK_LIB(util, openpty)
 +AC_SEARCH_LIBS(socket, socket)
