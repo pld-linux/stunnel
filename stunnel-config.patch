@@ -1,7 +1,7 @@
---- stunnel-4.16/tools/stunnel.conf-sample.in.orig	2006-08-31 19:02:30.000000000 +0000
-+++ stunnel-4.16/tools/stunnel.conf-sample.in	2006-09-02 12:08:51.776623500 +0000
+--- stunnel-4.27/tools/stunnel.conf-sample.in.orig	2009-04-16 11:10:09.000000000 +0200
++++ stunnel-4.27/tools/stunnel.conf-sample.in	2009-04-23 10:59:47.431971599 +0200
 @@ -3,18 +3,18 @@
- ; Please make sure you understand them (especially the effect of chroot jail)
+ ; Please make sure you understand them (especially the effect of the chroot jail)
  
  ; Certificate/key is needed in server mode and optional in client mode
 -cert = @prefix@/etc/stunnel/mail.pem
@@ -16,10 +16,10 @@
 -chroot = @prefix@/var/lib/stunnel/
 -setuid = nobody
 -setgid = @DEFAULT_GROUP@
-+;chroot = /var/lib/stunnel/
++chroot = /var/lib/stunnel/
 +setuid = stunnel
 +setgid = stunnel
- ; PID is created inside chroot jail
+ ; PID is created inside the chroot jail
 -pid = /stunnel.pid
 +pid = /var/run/stunnel/stunnel.pid
  
