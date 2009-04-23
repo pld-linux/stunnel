@@ -16,7 +16,7 @@
 -chroot = @prefix@/var/lib/stunnel/
 -setuid = nobody
 -setgid = @DEFAULT_GROUP@
-+chroot = /var/lib/stunnel/
++;chroot = /var/lib/stunnel/
 +setuid = stunnel
 +setgid = stunnel
  ; PID is created inside the chroot jail
