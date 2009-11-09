@@ -1,12 +1,12 @@
 Summary:	Universal SSL tunnel
 Summary(pl.UTF-8):	Uniwersalne narzędzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	4.27
+Version:	4.28
 Release:	1
 License:	GPL v2+
 Group:		Networking/Daemons
 Source0:	ftp://stunnel.mirt.net/stunnel/%{name}-%{version}.tar.gz
-# Source0-md5:	3c655d815576f50046a1c28744b88681
+# Source0-md5:	5bf753a042047f40a938e82ec7ece569
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet
