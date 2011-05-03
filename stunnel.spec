@@ -1,12 +1,12 @@
 Summary:	Universal SSL tunnel
 Summary(pl.UTF-8):	Uniwersalne narzędzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	4.35
+Version:	4.36
 Release:	1
-License:	GPL v2+
+License:	GPL v2+ with OpenSSL exception
 Group:		Networking/Daemons
 Source0:	ftp://ftp.stunnel.org/stunnel/%{name}-%{version}.tar.gz
-# Source0-md5:	2c8e153caee9d954fb7d00980968b50d
+# Source0-md5:	600a09b03798424842b24548ca1e4235
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet
@@ -17,9 +17,9 @@ Patch3:		%{name}-am.patch
 Patch4:		%{name}-libwrap_srv_name_log.patch
 Patch5:		%{name}-config.patch
 URL:		http://www.stunnel.org/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
-BuildRequires:	libtool
+BuildRequires:	libtool >= 2:2.0
 BuildRequires:	libwrap-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	openssl-tools >= 0.9.7d
@@ -155,13 +155,14 @@ fi
 %doc src/stunnel.exe tools/{ca.*,importCA.*}
 %doc %lang(fr) doc/stunnel.fr.html
 %doc %lang(pl) doc/pl/* doc/stunnel.pl.html
-%attr(750,stunnel,stunnel) %{_var}/run/stunnel
+%attr(755,root,root) %{_bindir}/stunnel
+%attr(755,root,root) %{_bindir}/stunnel3
 %dir %{_sysconfdir}/stunnel
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/stunnel/stunnel.conf
-%attr(755,root,root) %{_bindir}/*
-%{_mandir}/man8/*
-%lang(fr) %{_mandir}/fr/man8/*
-%lang(pl) %{_mandir}/pl/man8/*
+%attr(750,stunnel,stunnel) %{_var}/run/stunnel
+%{_mandir}/man8/stunnel.8*
+%lang(fr) %{_mandir}/fr/man8/stunnel.8*
+%lang(pl) %{_mandir}/pl/man8/stunnel.8*
 
 %files standalone
 %defattr(644,root,root,755)

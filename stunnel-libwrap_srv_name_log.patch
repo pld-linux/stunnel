@@ -1,13 +1,13 @@
---- stunnel-4.21/src/client.c.orig       2007-10-05 20:30:00.000000000 +0000
-+++ stunnel-4.21/src/client.c    2007-10-28 11:48:46.794934653 +0000
-@@ -776,8 +776,8 @@
-     c->fd=-1; /* avoid double close on cleanup */
-     if(strcmp(name, c->opt->username)) {
-         safestring(name);
+--- stunnel-4.36/src/client.c.orig	2011-05-02 18:12:53.000000000 +0200
++++ stunnel-4.36/src/client.c	2011-05-03 15:14:06.900264158 +0200
+@@ -844,8 +844,8 @@
+         ++user;
+     if(strcmp(user, c->opt->username)) {
+         safestring(user);
 -        s_log(LOG_WARNING, "Connection from %s REFUSED by IDENT (user %s)",
--            c->accepted_address, name);
+-            c->accepted_address, user);
 +        s_log(LOG_WARNING, "Connection to service %s from %s REFUSED by IDENT (user %s)",
-+            c->opt->servname, c->accepted_address, name);
++            c->opt->servname, c->accepted_address, user);
          longjmp(c->err, 1);
      }
      s_log(LOG_INFO, "IDENT authentication passed");
