@@ -8,6 +8,6 @@
 -            c->accepted_address, user);
 +        s_log(LOG_WARNING, "Connection to service %s from %s REFUSED by IDENT (user %s)",
 +            c->opt->servname, c->accepted_address, user);
+         str_free(line);
          longjmp(c->err, 1);
      }
-     s_log(LOG_INFO, "IDENT authentication passed");
