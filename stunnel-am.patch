@@ -4,8 +4,8 @@
  		else \
  			RND=""; \
  		fi; \
--		$(openssl) req -new -x509 -days 365 -nodes $$RND \
-+		echo -e "\n\n\n\n\n\n" | $(openssl) req -new -x509 -days 365 -nodes $$RND \
+-		$(openssl) req -new -x509 -days 365 $$RND \
++		echo -e "\n\n\n\n\n\n" | $(openssl) req -new -x509 -days 365 $$RND \
  			-config $(srcdir)/stunnel.cnf \
  			-out stunnel.pem -keyout stunnel.pem; \
- 		test $(USE_DH) -eq 0 || $(openssl) gendh $$RND 512 >> stunnel.pem; \
+ 		$(openssl) gendh $$RND 1024 >> stunnel.pem; \
