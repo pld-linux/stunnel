@@ -1,11 +1,11 @@
---- stunnel-4.10/tools/Makefile.am.orig	2005-03-26 21:38:01.000000000 +0100
-+++ stunnel-4.10/tools/Makefile.am	2005-05-11 13:30:00.000000000 +0200
+--- stunnel-4.46/tools/Makefile.am.orig	2011-10-21 18:13:23.000000000 +0200
++++ stunnel-4.46/tools/Makefile.am	2011-11-06 06:51:03.223375866 +0100
 @@ -20,7 +20,7 @@
  		else \
  			RND=""; \
  		fi; \
--		$(openssl) req -new -x509 -days 365 $$RND \
-+		echo -e "\n\n\n\n\n\n" | $(openssl) req -new -x509 -days 365 $$RND \
+-		$(OPENSSL) req -new -x509 -days 365 $$RND \
++		printf '\n\n\n\n\n\n' | $(OPENSSL) req -new -x509 -days 365 $$RND \
  			-config $(srcdir)/stunnel.cnf \
  			-out stunnel.pem -keyout stunnel.pem; \
- 		$(openssl) gendh $$RND 1024 >> stunnel.pem; \
+ 		$(OPENSSL) gendh $$RND 1024 >> stunnel.pem; \
