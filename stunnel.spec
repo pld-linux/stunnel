@@ -10,6 +10,7 @@ Source0:	ftp://ftp.stunnel.org/stunnel/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet
+Source4:	%{name}.tmpfiles
 Patch0:		%{name}-authpriv.patch
 Patch1:		%{name}-ac_fixes.patch
 Patch2:		%{name}-am.patch
@@ -95,7 +96,8 @@ stunnel działający jako usługa inetd.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig/rc-inetd},%{_mandir}/{pl,fr}/man8,%{_var}/run/stunnel}
+install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig/rc-inetd},%{_mandir}/{pl,fr}/man8,%{_var}/run/stunnel} \
+	$RPM_BUILD_ROOT/usr/lib/tmpfiles.d
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -107,6 +109,7 @@ mv -f $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf-sample $RPM_BUILD_ROOT%
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/stunnel
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/stunnel
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/stunnel
+install %{SOURCE4} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
 
 rm -rf $RPM_BUILD_ROOT%{_libdir}/stunnel
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.pem
@@ -157,6 +160,7 @@ fi
 %dir %{_sysconfdir}/stunnel
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/stunnel/stunnel.conf
 %attr(750,stunnel,stunnel) %{_var}/run/stunnel
+/usr/lib/tmpfiles.d/%{name}.conf
 %{_mandir}/man8/stunnel.8*
 %lang(fr) %{_mandir}/fr/man8/stunnel.8*
 %lang(pl) %{_mandir}/pl/man8/stunnel.8*
