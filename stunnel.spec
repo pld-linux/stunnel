@@ -1,12 +1,12 @@
 Summary:	Universal SSL tunnel
 Summary(pl.UTF-8):	Uniwersalne narzędzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	4.56
+Version:	5.05
 Release:	1
 License:	GPL v2+ with OpenSSL exception
 Group:		Networking/Daemons
 Source0:	ftp://ftp.stunnel.org/stunnel/%{name}-%{version}.tar.gz
-# Source0-md5:	ac4c4a30bd7a55b6687cbd62d864054c
+# Source0-md5:	39e2e678eb5572c9d86ae391db5da30b
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet

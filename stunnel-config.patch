@@ -1,22 +1,19 @@
 --- stunnel-4.40/tools/stunnel.conf-sample.in.orig	2011-07-07 16:47:37.000000000 +0000
 +++ stunnel-4.40/tools/stunnel.conf-sample.in	2011-07-24 09:40:54.658924150 +0000
-@@ -8,13 +8,13 @@
- 
- ; A copy of some devices and system files is needed within the chroot jail
+@@ -11,11 +11,11 @@
  ; Chroot conflicts with configuration file reload and many other features
--chroot = @prefix@/var/lib/stunnel/
-+;chroot = /var/lib/stunnel/
+ ;chroot = @prefix@/var/lib/stunnel/
  ; Chroot jail can be escaped if setuid option is not used
 -setuid = nobody
 -setgid = @DEFAULT_GROUP@
 +setuid = stunnel
 +setgid = stunnel
  
- ; PID is created inside the chroot jail
--pid = /stunnel.pid
+ ; PID file is created inside the chroot jail (if enabled)
+-;pid = @prefix@/var/run/stunnel.pid
 +pid = /var/run/stunnel/stunnel.pid
  
- ; Debugging stuff (may useful for troubleshooting)
+ ; Debugging stuff (may be useful for troubleshooting)
  ;debug = 7
 @@ -25,8 +25,8 @@
  ; *****************************************************************************
