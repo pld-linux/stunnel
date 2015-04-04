@@ -1,18 +1,17 @@
 Summary:	Universal SSL tunnel
 Summary(pl.UTF-8):	Uniwersalne narzędzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	5.05
+Version:	5.14
 Release:	1
 License:	GPL v2+ with OpenSSL exception
 Group:		Networking/Daemons
 Source0:	ftp://ftp.stunnel.org/stunnel/%{name}-%{version}.tar.gz
-# Source0-md5:	39e2e678eb5572c9d86ae391db5da30b
+# Source0-md5:	e716501960dc6856d80f92547298f724
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet
 Source4:	%{name}.tmpfiles
 Patch0:		%{name}-authpriv.patch
-Patch1:		%{name}-ac_fixes.patch
 Patch2:		%{name}-am.patch
 Patch3:		%{name}-libwrap_srv_name_log.patch
 Patch4:		%{name}-config.patch
@@ -81,7 +80,6 @@ stunnel działający jako usługa inetd.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -102,7 +100,6 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig/rc-inetd},%{_mandir}/{pl,
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv -f $RPM_BUILD_ROOT%{_mandir}/man8/stunnel.fr.8 $RPM_BUILD_ROOT%{_mandir}/fr/man8/stunnel.8
 mv -f $RPM_BUILD_ROOT%{_mandir}/man8/stunnel.pl.8 $RPM_BUILD_ROOT%{_mandir}/pl/man8/stunnel.8
 mv -f $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf-sample $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf
 
@@ -111,9 +108,8 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/stunnel
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/stunnel
 install %{SOURCE4} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
 
-rm -rf $RPM_BUILD_ROOT%{_libdir}/stunnel
-rm -f $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.pem
-rm -rf $RPM_BUILD_ROOT%{_docdir}/stunnel
+%{__rm} -r $RPM_BUILD_ROOT%{_libdir}/stunnel
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/stunnel
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -153,7 +149,6 @@ fi
 %defattr(644,root,root,755)
 # note: this COPYING contains general information not GPL text
 %doc AUTHORS BUGS COPYING CREDITS ChangeLog NEWS PORTS README TODO doc/en/* doc/stunnel.html tools/{ca.*,importCA.*}
-%doc %lang(fr) doc/stunnel.fr.html
 %doc %lang(pl) doc/pl/* doc/stunnel.pl.html
 %attr(755,root,root) %{_bindir}/stunnel
 %attr(755,root,root) %{_bindir}/stunnel3
@@ -162,7 +157,6 @@ fi
 %attr(750,stunnel,stunnel) %{_var}/run/stunnel
 /usr/lib/tmpfiles.d/%{name}.conf
 %{_mandir}/man8/stunnel.8*
-%lang(fr) %{_mandir}/fr/man8/stunnel.8*
 %lang(pl) %{_mandir}/pl/man8/stunnel.8*
 
 %files standalone
