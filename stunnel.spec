@@ -1,20 +1,18 @@
 Summary:	Universal SSL tunnel
 Summary(pl.UTF-8):	Uniwersalne narzędzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	5.14
-Release:	3
+Version:	5.49
+Release:	1
 License:	GPL v2+ with OpenSSL exception
 Group:		Networking/Daemons
 Source0:	ftp://ftp.stunnel.org/stunnel/%{name}-%{version}.tar.gz
-# Source0-md5:	e716501960dc6856d80f92547298f724
+# Source0-md5:	0b41240e5585ec7d55ca343feed5530f
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet
 Source4:	%{name}.tmpfiles
-Patch0:		%{name}-authpriv.patch
-Patch2:		%{name}-am.patch
-Patch3:		%{name}-libwrap_srv_name_log.patch
-Patch4:		%{name}-config.patch
+Patch0:		%{name}-config.patch
+Patch1:		stunnel-libwrap_srv_name_log.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -80,16 +78,15 @@ stunnel działający jako usługa inetd.
 %prep
 %setup -q
 %patch0 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__automake}
-%configure
+%configure \
+	--disable-silent-rules
 %{__make}
 
 %install

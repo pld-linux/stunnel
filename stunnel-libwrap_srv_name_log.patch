@@ -1,13 +1,12 @@
---- stunnel-5.14/src/client.c.orig	2015-04-04 08:02:22.369998614 +0200
-+++ stunnel-5.14/src/client.c	2015-04-04 08:05:08.149995161 +0200
-@@ -1039,8 +1039,8 @@
+--- stunnel-5.49/src/client.c~	2018-08-26 19:36:09.000000000 +0200
++++ stunnel-5.49/src/client.c	2018-09-20 18:32:38.330919447 +0200
+@@ -1202,7 +1202,8 @@ NOEXPORT void auth_user(CLI *c) {
      while(*user==' ') /* skip leading spaces */
          ++user;
      if(strcmp(user, c->opt->username)) {
 -        s_log(LOG_WARNING, "Connection from %s REFUSED by IDENT (user \"%s\")",
--            accepted_address, user);
 +        s_log(LOG_WARNING, "Connection to service %s from %s REFUSED by IDENT (user \"%s\")",
-+            c->opt->servname, accepted_address, user);
++            c->opt->servname,
+             c->accepted_address, user);
          str_free(line);
-         longjmp(c->err, 1);
-     }
+         throw_exception(c, 1);
