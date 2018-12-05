@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	systemd	# systemd socket activation support
+
 Summary:	Universal SSL tunnel
 Summary(pl.UTF-8):	Uniwersalne narzędzie do bezpiecznego tunelowania
 Name:		stunnel
@@ -21,6 +25,7 @@ BuildRequires:	libwrap-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	openssl-tools >= 0.9.7d
 BuildRequires:	rpmbuild(macros) >= 1.268
+%{?with_systemd:BuildRequires:	systemd-devel}
 Requires(postun):	/sbin/ldconfig
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
@@ -86,24 +91,25 @@ stunnel działający jako usługa inetd.
 %{__autoconf}
 %{__automake}
 %configure \
-	--disable-silent-rules
+	--disable-silent-rules \
+	%{!?with_systemd:--disable-systemd}
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig/rc-inetd},%{_mandir}/{pl,fr}/man8,%{_var}/run/stunnel} \
-	$RPM_BUILD_ROOT/usr/lib/tmpfiles.d
+	$RPM_BUILD_ROOT%{systemdtmpfilesdir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv -f $RPM_BUILD_ROOT%{_mandir}/man8/stunnel.pl.8 $RPM_BUILD_ROOT%{_mandir}/pl/man8/stunnel.8
-mv -f $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf-sample $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf
+%{__mv} $RPM_BUILD_ROOT%{_mandir}/man8/stunnel.pl.8 $RPM_BUILD_ROOT%{_mandir}/pl/man8/stunnel.8
+%{__mv} $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf-sample $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.conf
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/stunnel
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/stunnel
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/stunnel
-install %{SOURCE4} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
+install %{SOURCE4} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
 
 %{__rm} -r $RPM_BUILD_ROOT%{_libdir}/stunnel
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/stunnel
@@ -152,7 +158,7 @@ fi
 %dir %{_sysconfdir}/stunnel
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/stunnel/stunnel.conf
 %attr(750,stunnel,stunnel) %{_var}/run/stunnel
-/usr/lib/tmpfiles.d/%{name}.conf
+%{systemdtmpfilesdir}/%{name}.conf
 %{_mandir}/man8/stunnel.8*
 %lang(pl) %{_mandir}/pl/man8/stunnel.8*
 
