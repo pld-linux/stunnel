@@ -5,12 +5,12 @@
 Summary:	Universal SSL tunnel
 Summary(pl.UTF-8):	Uniwersalne narzędzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	5.54
-Release:	2
+Version:	5.62
+Release:	1
 License:	GPL v2+ with OpenSSL exception
 Group:		Networking/Daemons
-Source0:	ftp://ftp.stunnel.org/stunnel/%{name}-%{version}.tar.gz
-# Source0-md5:	788358cf84f71f9603e9fe93807c081d
+Source0:	https://www.stunnel.org/downloads/%{name}-%{version}.tar.gz
+# Source0-md5:	e8cafad72a75252ff85210c0cef77f19
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet
@@ -80,6 +80,21 @@ stunnel acts as inetd service.
 %description inetd -l pl.UTF-8
 stunnel działający jako usługa inetd.
 
+%package -n bash-completion-stunnel
+Summary:	bash-completion for stunnel command
+Summary(pl.UTF-8):	Bashowe uzupełnianie parametrów polecenia stunnel
+Group:		Applications/Shells
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	bash-completion >= 2.0
+BuildArch:	noarch
+
+%description -n bash-completion-stunnel
+This package provides bash-completion for stunnel command.
+
+%description -n bash-completion-stunnel -l pl.UTF-8
+Pakiet ten dostarcza bashowe uzupełnianie parametrów polecenia
+stunnel.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -113,6 +128,8 @@ install %{SOURCE4} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
 
 %{__rm} -r $RPM_BUILD_ROOT%{_libdir}/stunnel
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/stunnel
+
+%{__mv} $RPM_BUILD_ROOT%{bash_compdir}/stunnel.bash $RPM_BUILD_ROOT%{bash_compdir}/stunnel
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -151,7 +168,7 @@ fi
 %files
 %defattr(644,root,root,755)
 # note: this COPYING contains general information not GPL text
-%doc AUTHORS BUGS COPYING CREDITS ChangeLog NEWS PORTS README TODO doc/en/* doc/stunnel.html tools/{ca.*,importCA.*}
+%doc AUTHORS.md BUGS.md COPYING.md CREDITS.md NEWS.md PORTS.md README.md TODO.md doc/en/* doc/stunnel.html tools/{ca.*,importCA.*}
 %doc %lang(pl) doc/pl/* doc/stunnel.pl.html
 %attr(755,root,root) %{_bindir}/stunnel
 %attr(755,root,root) %{_bindir}/stunnel3
@@ -170,3 +187,7 @@ fi
 %files inetd
 %defattr(644,root,root,755)
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rc-inetd/stunnel
+
+%files -n bash-completion-stunnel
+%defattr(644,root,root,755)
+%{bash_compdir}/stunnel
