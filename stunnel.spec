@@ -1,12 +1,13 @@
 #
 # Conditional build:
-%bcond_without	systemd	# systemd socket activation support
+%bcond_without	systemd		# systemd socket activation support
+%bcond_with	mimalloc	# use mimalloc
 
 Summary:	Universal SSL tunnel
 Summary(pl.UTF-8):	Uniwersalne narzędzie do bezpiecznego tunelowania
 Name:		stunnel
 Version:	5.75
-Release:	1
+Release:	2
 License:	GPL v2+ with OpenSSL exception
 Group:		Networking/Daemons
 Source0:	https://www.stunnel.org/downloads/%{name}-%{version}.tar.gz
@@ -22,6 +23,7 @@ BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libtool >= 2:2.0
 BuildRequires:	libwrap-devel
+%{?with_mimalloc:BuildRequires:	mimalloc-devel}
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	openssl-tools >= 0.9.7d
 BuildRequires:	rpmbuild(macros) >= 1.268
@@ -107,7 +109,7 @@ stunnel.
 %{__autoheader}
 %{__automake}
 %configure \
-	ac_cv_search_mi_malloc=no \
+	%{!?with_mimalloc:ac_cv_header_mimalloc_h=no ac_cv_search_mi_malloc=no} \
 	ac_cv_search_yp_get_default_domain=no \
 	--disable-silent-rules \
 	%{!?with_systemd:--disable-systemd} \
