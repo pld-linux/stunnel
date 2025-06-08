@@ -5,12 +5,12 @@
 Summary:	Universal SSL tunnel
 Summary(pl.UTF-8):	Uniwersalne narzędzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	5.62
+Version:	5.75
 Release:	1
 License:	GPL v2+ with OpenSSL exception
 Group:		Networking/Daemons
 Source0:	https://www.stunnel.org/downloads/%{name}-%{version}.tar.gz
-# Source0-md5:	e8cafad72a75252ff85210c0cef77f19
+# Source0-md5:	a10dc6f1925f4ce1945ff95dc327ed28
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet
@@ -102,12 +102,16 @@ stunnel.
 
 %build
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoconf}
+%{__autoheader}
 %{__automake}
 %configure \
+	ac_cv_search_mi_malloc=no \
+	ac_cv_search_yp_get_default_domain=no \
 	--disable-silent-rules \
-	%{!?with_systemd:--disable-systemd}
+	%{!?with_systemd:--disable-systemd} \
+	--with-bashcompdir=%{bash_compdir}
 %{__make}
 
 %install
