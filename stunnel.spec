@@ -20,6 +20,7 @@ Patch0:		%{name}-config.patch
 Patch1:		stunnel-libwrap_srv_name_log.patch
 URL:		http://www.stunnel.org/
 BuildRequires:	autoconf >= 2.50
+BuildRequires:	autoconf-archive
 BuildRequires:	automake
 BuildRequires:	libtool >= 2:2.0
 BuildRequires:	libwrap-devel
@@ -87,7 +88,7 @@ Summary:	bash-completion for stunnel command
 Summary(pl.UTF-8):	Bashowe uzupełnianie parametrów polecenia stunnel
 Group:		Applications/Shells
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	bash-completion >= 2.0
+Requires:	bash-completion >= 1:2.0
 BuildArch:	noarch
 
 %description -n bash-completion-stunnel
