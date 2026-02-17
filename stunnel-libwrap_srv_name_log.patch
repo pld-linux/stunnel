@@ -4,8 +4,8 @@
      while(*user==' ') /* skip leading spaces */
          ++user;
      if(strcmp(user, c->opt->username)) {
--        s_log(LOG_WARNING, "Connection from %s REFUSED by IDENT (user \"%s\")",
-+        s_log(LOG_WARNING, "Connection to service %s from %s REFUSED by IDENT (user \"%s\")",
+-        s_log(LOG_ERR, "Connection from %s REFUSED by IDENT (user \"%s\")",
++        s_log(LOG_ERR, "Connection to service %s from %s REFUSED by IDENT (user \"%s\")",
 +            c->opt->servname,
              c->accepted_address, user);
          str_free(line);
