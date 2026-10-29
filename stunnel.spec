@@ -6,19 +6,19 @@
 Summary:	Universal SSL tunnel
 Summary(pl.UTF-8):	Uniwersalne narzędzie do bezpiecznego tunelowania
 Name:		stunnel
-Version:	5.81
+Version:	5.82
 Release:	1
 License:	GPL v2+ with OpenSSL exception
 Group:		Networking/Daemons
 Source0:	https://www.stunnel.org/downloads/%{name}-%{version}.tar.gz
-# Source0-md5:	a0fd15ed2e1b2a39bf529aa6e9c49d35
+# Source0-md5:	3f1646ccf4fbdef0c2c53e965fbeccc2
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.inet
 Source4:	%{name}.tmpfiles
 Patch0:		%{name}-config.patch
 Patch1:		stunnel-libwrap_srv_name_log.patch
-URL:		http://www.stunnel.org/
+URL:		https://www.stunnel.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	autoconf-archive
 BuildRequires:	automake
@@ -29,7 +29,6 @@ BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	openssl-tools >= 0.9.7d
 BuildRequires:	rpmbuild(macros) >= 1.268
 %{?with_systemd:BuildRequires:	systemd-devel}
-Requires(postun):	/sbin/ldconfig
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
 Requires(pre):	/bin/id
@@ -87,7 +86,7 @@ stunnel działający jako usługa inetd.
 Summary:	bash-completion for stunnel command
 Summary(pl.UTF-8):	Bashowe uzupełnianie parametrów polecenia stunnel
 Group:		Applications/Shells
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 Requires:	bash-completion >= 1:2.0
 BuildArch:	noarch
 
@@ -145,10 +144,7 @@ rm -rf $RPM_BUILD_ROOT
 %groupadd -g 130 stunnel
 %useradd -u 130 -d /var/run/stunnel -s /bin/false -c "stunnel User" -g stunnel stunnel
 
-%post	-p /sbin/ldconfig
-
 %postun
-/sbin/ldconfig
 if [ "$1" = "0" ]; then
 	%userremove stunnel
 	%groupremove stunnel
